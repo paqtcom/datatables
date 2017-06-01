@@ -81,12 +81,6 @@ var DataTable = (function($table, userOptions, translations) {
             var dataTableConfig = {
                 autoWidth: false,
                 columns: tableColumns,
-                language: tableLanguage,
-                order: tableOrder,
-                orderCellsTop: true,
-                processing: true,
-                responsive: true,
-                serverSide: globals.serverSide,
                 initComplete: function() {
                     var table = this.api();
                     var filterRow = $table.find(elements.filterRowSelector);
@@ -94,7 +88,13 @@ var DataTable = (function($table, userOptions, translations) {
                     if (filterRow.length > 0) {
                         functions.filterColumn(table);
                     }
-                }
+                },
+                language: tableLanguage,
+                order: tableOrder,
+                orderCellsTop: true,
+                processing: true,
+                responsive: true,
+                serverSide: globals.serverSide
             };
 
             if(globals.serverSide == true) {
