@@ -75,30 +75,37 @@ var DataTable = (function($table, userOptions, translations) {
             var tableColumns = functions.getColumns();
             var tableOrder = functions.getOrder();
             var tableLanguage = translations.get(globals.options.language);
+            var objTable;
 
-            // eslint-disable-next-line new-cap
-            var objTable = $table.DataTable({
-                ajax: {
-                    method: 'POST',
-                    url: globals.source
-                },
+            var dataTableConfig = {
                 autoWidth: false,
                 columns: tableColumns,
-                initComplete: function() {
-                    var table = this.api();
-                    var filterRow = $table.find(elements.filterRowSelector);
-
-                    if (filterRow.length > 0) {
-                        functions.filterColumn(table);
-                    }
-                },
                 language: tableLanguage,
                 order: tableOrder,
                 orderCellsTop: true,
                 processing: true,
                 responsive: true,
                 serverSide: true
-            });
+            };
+
+            if(globals.source) {
+                dataTableConfig.ajax = {
+                    method: 'POST',
+                    url: globals.source
+                };
+
+                dataTableConfig.initComplete = function() {
+                    var table = this.api();
+                    var filterRow = $table.find(elements.filterRowSelector);
+
+                    if (filterRow.length > 0) {
+                        functions.filterColumn(table);
+                    }
+                };
+            }
+
+            // eslint-disable-next-line new-cap
+            objTable = $table.DataTable(dataTableConfig);
 
             if (typeof globals.autoReload !== 'undefined') {
                 functions.bindReload(objTable, globals.autoReload);
