@@ -28,7 +28,8 @@ var DataTable = (function($table, userOptions, translations) {
         source: $table.data('source'),
         autoReload: $table.data('auto-reload'),
         perPage: $table.data('per-page'),
-        tableID: $table.attr('id')
+        tableID: $table.attr('id'),
+        serverSide: true
     };
 
 
@@ -49,7 +50,7 @@ var DataTable = (function($table, userOptions, translations) {
             var columnRow = $table.find(elements.columnRowSelector);
 
             if (typeof globals.source === 'undefined' || globals.source === '') {
-                throw prefix.throw + 'missing source data attribute!';
+                globals.serverSide = false;
             }
 
             if (typeof globals.tableID === 'undefined' || globals.tableID === '') {
@@ -85,22 +86,21 @@ var DataTable = (function($table, userOptions, translations) {
                 orderCellsTop: true,
                 processing: true,
                 responsive: true,
-                serverSide: true
-            };
-
-            if(globals.source) {
-                dataTableConfig.ajax = {
-                    method: 'POST',
-                    url: globals.source
-                };
-
-                dataTableConfig.initComplete = function() {
+                serverSide: globals.serverSide,
+                initComplete: function() {
                     var table = this.api();
                     var filterRow = $table.find(elements.filterRowSelector);
 
                     if (filterRow.length > 0) {
                         functions.filterColumn(table);
                     }
+                }
+            };
+
+            if(globals.serverSide == true) {
+                dataTableConfig.ajax = {
+                    method: 'POST',
+                    url: globals.source
                 };
             }
 
