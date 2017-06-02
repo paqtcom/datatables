@@ -10,7 +10,7 @@
         "datatables",
         "javascript"
     ],
-    "homepage": "https://github.com/Way2WebPieter/DataTables",
+    "homepage": "https://bitbucket.org/way2dev/datatables",
     "ignore": [
         "**/.*",
         "node_modules",

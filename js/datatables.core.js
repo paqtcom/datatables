@@ -28,7 +28,8 @@ var DataTable = (function($table, userOptions, translations) {
         source: $table.data('source'),
         autoReload: $table.data('auto-reload'),
         perPage: $table.data('per-page'),
-        tableID: $table.attr('id')
+        tableID: $table.attr('id'),
+        serverSide: true
     };
 
 
@@ -49,7 +50,7 @@ var DataTable = (function($table, userOptions, translations) {
             var columnRow = $table.find(elements.columnRowSelector);
 
             if (typeof globals.source === 'undefined' || globals.source === '') {
-                throw prefix.throw + 'missing source data attribute!';
+                globals.serverSide = false;
             }
 
             if (typeof globals.tableID === 'undefined' || globals.tableID === '') {
@@ -75,13 +76,9 @@ var DataTable = (function($table, userOptions, translations) {
             var tableColumns = functions.getColumns();
             var tableOrder = functions.getOrder();
             var tableLanguage = translations.get(globals.options.language);
+            var objTable;
 
-            // eslint-disable-next-line new-cap
-            var objTable = $table.DataTable({
-                ajax: {
-                    method: 'POST',
-                    url: globals.source
-                },
+            var dataTableConfig = {
                 autoWidth: false,
                 columns: tableColumns,
                 initComplete: function() {
@@ -97,8 +94,18 @@ var DataTable = (function($table, userOptions, translations) {
                 orderCellsTop: true,
                 processing: true,
                 responsive: true,
-                serverSide: true
-            });
+                serverSide: globals.serverSide
+            };
+
+            if(globals.serverSide == true) {
+                dataTableConfig.ajax = {
+                    method: 'POST',
+                    url: globals.source
+                };
+            }
+
+            // eslint-disable-next-line new-cap
+            objTable = $table.DataTable(dataTableConfig);
 
             if (typeof globals.autoReload !== 'undefined') {
                 functions.bindReload(objTable, globals.autoReload);
