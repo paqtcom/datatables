@@ -32,6 +32,14 @@ var DataTable = (function($table, userOptions, translations) {
         serverSide: true
     };
 
+    var table;
+
+    var events = {
+        'draw.dt': [
+            table.responsive.recalc
+        ]
+    };
+
 
     var functions = {
         /**
@@ -76,7 +84,6 @@ var DataTable = (function($table, userOptions, translations) {
             var tableColumns = functions.getColumns();
             var tableOrder = functions.getOrder();
             var tableLanguage = translations.get(globals.options.language);
-            var objTable;
 
             var dataTableConfig = {
                 autoWidth: false,
@@ -105,22 +112,48 @@ var DataTable = (function($table, userOptions, translations) {
             }
 
             // eslint-disable-next-line new-cap
-            objTable = $table.DataTable(dataTableConfig);
+            table = $table.DataTable(dataTableConfig);
 
             if (typeof globals.autoReload !== 'undefined') {
-                functions.bindReload(objTable, globals.autoReload);
+                functions.bindReload(table, globals.autoReload);
             }
 
             if (typeof globals.perPage !== 'undefined') {
-                functions.setPageLength(objTable);
+                functions.setPageLength(table);
             }
+
+            table.on('init.dt', function() {
+                functions.triggerEvent('init.dt');
+            });
 
             // once the table has been drawn, ensure a responsive reculcation
             // if we do not do this, pagination might cause columns to go outside the table
-            objTable.on('draw.dt', function() {
-                objTable.responsive.recalc();
+            table.on('draw.dt', function() {
+                functions.triggerEvent('draw.dt');
+            });
+
+            table.on('responsive-resize', function() {
+                functions.triggerEvent('responsive-resize');
             });
         },
+
+        addEvent: function(on, fn) {
+            if(!events[on]) {
+                events[on] = [];
+            }
+
+            events[on].push(fn);
+        },
+
+        triggerEvent: function(on) {
+            if(!events[on]) {
+                return;
+            }
+
+            $.each(events[on], function( index, fn ){
+                fn();
+            });
+        }
 
         /**
          * Set the page length.
