@@ -30,10 +30,9 @@ var DataTable = (function($table, userOptions, translations) {
         perPage: $table.data('per-page'),
         tableID: $table.attr('id'),
         serverSide: true,
-        stateSaving: true
+        stateSaving: true,
+        table
     };
-
-    var table;
 
     var events = {
         'draw.dt': [
@@ -114,27 +113,27 @@ var DataTable = (function($table, userOptions, translations) {
             }
 
             // eslint-disable-next-line new-cap
-            table = $table.DataTable(dataTableConfig);
+            globals.table = $table.DataTable(dataTableConfig);
 
             if (typeof globals.autoReload !== 'undefined') {
-                functions.bindReload(table, globals.autoReload);
+                functions.bindReload(globals.autoReload);
             }
 
             if (typeof globals.perPage !== 'undefined') {
-                functions.setPageLength(table);
+                functions.setPageLength();
             }
 
-            table.on('init.dt', function() {
+            globals.table.on('init.dt', function() {
                 functions.triggerEvent('init.dt');
             });
 
             // once the table has been drawn, ensure a responsive reculcation
             // if we do not do this, pagination might cause columns to go outside the table
-            table.on('draw.dt', function() {
+            globals.table.on('draw.dt', function() {
                 functions.triggerEvent('draw.dt');
             });
 
-            table.on('responsive-resize', function() {
+            globals.table.on('responsive-resize', function() {
                 functions.triggerEvent('responsive-resize');
             });
         },
@@ -159,11 +158,9 @@ var DataTable = (function($table, userOptions, translations) {
 
         /**
          * Set the page length.
-         *
-         * @param {object} table
          */
-        setPageLength: function(table) {
-            table.page.len(globals.perPage).draw();
+        setPageLength: function() {
+            globals.table.page.len(globals.perPage).draw();
         },
 
         /**
@@ -309,12 +306,11 @@ var DataTable = (function($table, userOptions, translations) {
         /**
          * Bind the reload.
          *
-         * @param {object} table
          * @param {string} interval
          */
-        bindReload: function(table, interval) {
+        bindReload: function(interval) {
             setInterval(function() {
-                table.ajax.reload();
+                globals.table.ajax.reload();
             }, interval);
         },
 
