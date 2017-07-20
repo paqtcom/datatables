@@ -84,11 +84,10 @@ var DataTable = (function($table, userOptions, translations) {
                 autoWidth: false,
                 columns: tableColumns,
                 initComplete: function() {
-                    var table = this.api();
                     var filterRow = $table.find(elements.filterRowSelector);
 
                     if (filterRow.length > 0) {
-                        functions.filterColumn(table);
+                        functions.filterColumn();
                     }
                 },
                 language: tableLanguage,
@@ -241,31 +240,28 @@ var DataTable = (function($table, userOptions, translations) {
 
         /**
          * Filter the columns.
-         *
-         * @param {object} table
          */
-        filterColumn: function(table) {
-            table
+        filterColumn: function() {
+            globals.table
                 .columns()
                 .eq(0)
                 .each(function(colIdx) {
                     var tableFilter = $table.find(elements.filterRowSelector + ' th:eq(' + colIdx + ')');
 
-                    functions.initFilterSelect(table, colIdx, tableFilter);
-                    functions.initFilterInput(table, colIdx, tableFilter);
+                    functions.initFilterSelect(colIdx, tableFilter);
+                    functions.initFilterInput(colIdx, tableFilter);
                 });
         },
 
         /**
          * Initialize the input filter.
          *
-         * @param {object} table
          * @param {string} colIdx
          * @param {object} tableFilter
          */
-        initFilterInput: function(table, colIdx, tableFilter) {
+        initFilterInput: function(colIdx, tableFilter) {
             var debouncedFiltering = functions.debounce(function(searchValue) {
-                table
+                globals.table
                     .column(colIdx)
                     .search(searchValue)
                     .draw();
@@ -282,16 +278,15 @@ var DataTable = (function($table, userOptions, translations) {
         /**
          * Initialize the select filter.
          *
-         * @param {object} table
          * @param {string} colIdx
          * @param {object} tableFilter
          */
-        initFilterSelect: function(table, colIdx, tableFilter) {
+        initFilterSelect: function(colIdx, tableFilter) {
             tableFilter.find('.js-select-filter').on('change', function() {
                 var select = $(this);
                 var searchValue = select.val();
 
-                table
+                globals.table
                     .column(colIdx)
                     .search(searchValue)
                     .draw();
