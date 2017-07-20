@@ -3,12 +3,13 @@
  *
  * @param {object} $table
  * @param {object} userOptions
+ * @param {object} eventOptions
  * @param {object} translations
  *
  * @return {object}
  */
  // eslint-disable-next-line no-unused-vars
-var DataTable = (function($table, userOptions, translations) {
+var DataTable = (function($table, userOptions, eventOptions, translations) {
     'use strict';
 
     var elements = {
@@ -44,6 +45,16 @@ var DataTable = (function($table, userOptions, translations) {
         init: function() {
             functions.hasRequirementsOrThrow();
             functions.makeTable();
+            functions.getEventOptions();
+        },
+
+        /**
+         * Get the custom event options, and merge with the default the events.
+         */
+        getEventOptions: function() {
+            $.each(eventOptions, function(eventKey, eventOption) {
+                events[eventKey] = $.extend({}, events[eventKey], eventOption || {});
+            });
         },
 
         /**

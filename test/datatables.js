@@ -25,6 +25,7 @@
             {
                 language: 'nl'
             },
+            {},
             Table.Translations
         );
 
