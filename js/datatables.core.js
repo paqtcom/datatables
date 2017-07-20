@@ -37,7 +37,7 @@ var DataTable = (function($table, userOptions, translations) {
 
     var events = {
         'draw.dt': [
-            globals.table.responsive.recalc
+            functions.recalc
         ]
     };
 
@@ -342,6 +342,10 @@ var DataTable = (function($table, userOptions, translations) {
                     func.apply(context, args);
                 }
             };
+        },
+
+        recalc: function() {
+            globals.table.responsive.recalc();
         }
     };
 
