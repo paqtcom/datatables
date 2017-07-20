@@ -29,7 +29,8 @@ var DataTable = (function($table, userOptions, translations) {
         autoReload: $table.data('auto-reload'),
         perPage: $table.data('per-page'),
         tableID: $table.attr('id'),
-        serverSide: true
+        serverSide: true,
+        stateSaving: true
     };
 
     var table;
@@ -101,7 +102,8 @@ var DataTable = (function($table, userOptions, translations) {
                 orderCellsTop: true,
                 processing: true,
                 responsive: true,
-                serverSide: globals.serverSide
+                serverSide: globals.serverSide,
+                stateSave: globals.stateSaving
             };
 
             if(globals.serverSide == true) {
@@ -150,10 +152,10 @@ var DataTable = (function($table, userOptions, translations) {
                 return;
             }
 
-            $.each(events[on], function( index, fn ){
+            $.each(events[on], function(index, fn) {
                 fn();
             });
-        }
+        },
 
         /**
          * Set the page length.
