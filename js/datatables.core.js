@@ -124,7 +124,7 @@ var DataTable = (function($table, userOptions, eventOptions, translations) {
 
             globals.state = globals.table.state.loaded();
 
-            functions.setColumns();
+            functions.setFilterValues();
 
             if (typeof globals.autoReload !== 'undefined') {
                 functions.bindReload(globals.autoReload);
@@ -350,11 +350,17 @@ var DataTable = (function($table, userOptions, eventOptions, translations) {
             };
         },
 
+        /**
+         * Recalc the table.
+         */
         recalc: function() {
             globals.table.responsive.recalc();
         },
 
-        setColumns: function() {
+        /**
+         * Set the filter values.
+         */
+        setFilterValues: function() {
             if(!globals.state.columns) {
                 return;
             }
