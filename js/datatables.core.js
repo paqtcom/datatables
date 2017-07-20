@@ -7,6 +7,7 @@
  *
  * @return {object}
  */
+ // eslint-disable-next-line no-unused-vars
 var DataTable = (function($table, userOptions, translations) {
     'use strict';
 
@@ -31,12 +32,12 @@ var DataTable = (function($table, userOptions, translations) {
         tableID: $table.attr('id'),
         serverSide: true,
         stateSaving: true,
-        table
+        table: false
     };
 
     var events = {
         'draw.dt': [
-            table.responsive.recalc
+            globals.table.responsive.recalc
         ]
     };
 
