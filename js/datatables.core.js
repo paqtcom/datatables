@@ -13,8 +13,9 @@ var DataTable = (function($table, userOptions, eventOptions, translations) {
     'use strict';
 
     var elements = {
-        columnRowSelector: '.js-table-columns',
-        filterRowSelector: '.js-table-filters'
+        columnRowSelector:  '.js-table-columns',
+        filterRowSelector:  '.js-table-filters',
+        filterSelectColumn: '.js-select-filter'
     };
 
     var prefix = {
@@ -33,7 +34,8 @@ var DataTable = (function($table, userOptions, eventOptions, translations) {
         tableID: $table.attr('id'),
         serverSide: true,
         stateSaving: true,
-        table: false
+        table: false,
+        state: false
     };
 
 
@@ -119,6 +121,10 @@ var DataTable = (function($table, userOptions, eventOptions, translations) {
 
             // eslint-disable-next-line new-cap
             globals.table = $table.DataTable(dataTableConfig);
+
+            globals.state = globals.table.state.loaded();
+
+            functions.setColumns();
 
             if (typeof globals.autoReload !== 'undefined') {
                 functions.bindReload(globals.autoReload);
@@ -293,7 +299,7 @@ var DataTable = (function($table, userOptions, eventOptions, translations) {
          * @param {object} tableFilter
          */
         initFilterSelect: function(colIdx, tableFilter) {
-            tableFilter.find('.js-select-filter').on('change', function() {
+            tableFilter.find(elements.filterSelectColumn).on('change', function() {
                 var select = $(this);
                 var searchValue = select.val();
 
@@ -346,6 +352,16 @@ var DataTable = (function($table, userOptions, eventOptions, translations) {
 
         recalc: function() {
             globals.table.responsive.recalc();
+        },
+
+        setColumns: function() {
+            if(!globals.state.columns) {
+                return;
+            }
+
+            $.each(globals.state.columns, function(column, value) {
+                $(elements.filterRowSelector + ' .form-control').eq(column).val(value.search.search);
+            });
         }
     };
 
