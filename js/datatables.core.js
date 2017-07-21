@@ -139,15 +139,15 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
 
             // once the table has been drawn, ensure a responsive reculcation
             // if we do not do this, pagination might cause columns to go outside the table
-            globals.table.on('draw.dt', function() {
-                functions.triggerEvent('draw.dt');
-            });
-
-            globals.table.on('responsive-resize', function() {
-                functions.triggerEvent('responsive-resize');
-            });
+            $.each(events, functions.listenToEvent);
         },
 
+        /**
+         * Add a new event.
+         *
+         * @param {string} on
+         * @param {Function} fn
+         */
         addEvent: function(on, fn) {
             if(!events[on]) {
                 events[on] = [];
@@ -156,6 +156,22 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             events[on].push(fn);
         },
 
+        /**
+         * Listen to an event.
+         *
+         * @param {string} eventKey
+         */
+        listenToEvent: function(eventKey) {
+            globals.table.on(eventKey, function() {
+                functions.triggerEvent(eventKey);
+            });
+        },
+
+        /**
+         * Trigger an event.
+         *
+         * @param {key} on
+         */
         triggerEvent: function(on) {
             if(!events[on]) {
                 return;
