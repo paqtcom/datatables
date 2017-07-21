@@ -8,8 +8,7 @@
  *
  * @return {object}
  */
- // eslint-disable-next-line no-unused-vars
-var DataTable = function($table, userOptions, eventOptions, translations) {
+window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
     var elements = {
