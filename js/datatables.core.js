@@ -11,6 +11,8 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
+    var version = '0.0.9';
+
     var elements = {
         columnRowSelector:  '.js-table-columns',
         filterRowSelector:  '.js-table-filters',
@@ -395,6 +397,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     return {
         options:   globals.options,
         functions: functions,
-        element:   $table
+        element:   $table,
+        events:    events,
+        version:   version
     };
 };
