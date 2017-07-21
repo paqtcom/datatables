@@ -9,7 +9,7 @@
  * @return {object}
  */
  // eslint-disable-next-line no-unused-vars
-var DataTable = (function($table, userOptions, eventOptions, translations) {
+var DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
     var elements = {
@@ -382,4 +382,4 @@ var DataTable = (function($table, userOptions, eventOptions, translations) {
         functions: functions,
         element:   $table
     };
-});
+};
