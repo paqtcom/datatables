@@ -24,7 +24,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     };
 
     var defaultOptions = {
-        language: 'en'
+        language: 'en',
+        stateSaving: true
     };
 
     var globals = {
@@ -34,7 +35,6 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         perPage: $table.data('per-page'),
         tableID: $table.attr('id'),
         serverSide: true,
-        stateSaving: true,
         table: false,
         state: false
     };
@@ -110,7 +110,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 processing: true,
                 responsive: true,
                 serverSide: globals.serverSide,
-                stateSave: globals.stateSaving
+                stateSave: globals.options.stateSaving
             };
 
             if(globals.serverSide == true) {
