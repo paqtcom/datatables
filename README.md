@@ -109,14 +109,15 @@ $('.js-datatable').each(function() {
 
 ## DataTable parameters
  There are 4 parameters:
- $table
-   This must be the table element, just a single element.
- userOptions
-   This is an array, containt e.g. the language for the datatable.
- eventOptions
-   This is an array, you can call functions on datatable event.
-   http://m.datatables.net/reference/event/
- translations
-   This is the translations object, this contains e.g. the get function.
-   The get function from translations receives the language in the first parameter.
-   The get function must return an object with all the translation texts for datatable.
+
+* $table
+... This must be the table element, just a single element.
+* userOptions
+... This is an array, containt e.g. the language for the datatable.
+* eventOptions
+... This is an array, you can call functions on datatable event.
+... http://m.datatables.net/reference/event/
+* translations
+... This is the translations object, this contains e.g. the get function.
+... The get function from translations receives the language in the first parameter.
+... The get function must return an object with all the translation texts for datatable.
