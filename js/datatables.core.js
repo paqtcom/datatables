@@ -3,16 +3,20 @@
  *
  * @param {object} $table
  * @param {object} userOptions
+ * @param {object} eventOptions
  * @param {object} translations
  *
  * @return {object}
  */
-var DataTable = (function($table, userOptions, translations) {
+window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
+    var version = '0.0.9';
+
     var elements = {
-        columnRowSelector: '.js-table-columns',
-        filterRowSelector: '.js-table-filters'
+        columnRowSelector:  '.js-table-columns',
+        filterRowSelector:  '.js-table-filters',
+        filterSelectColumn: '.js-select-filter'
     };
 
     var prefix = {
@@ -20,7 +24,8 @@ var DataTable = (function($table, userOptions, translations) {
     };
 
     var defaultOptions = {
-        language: 'en'
+        language: 'en',
+        stateSaving: true
     };
 
     var globals = {
@@ -29,7 +34,9 @@ var DataTable = (function($table, userOptions, translations) {
         autoReload: $table.data('auto-reload'),
         perPage: $table.data('per-page'),
         tableID: $table.attr('id'),
-        serverSide: true
+        serverSide: true,
+        table: false,
+        state: false
     };
 
 
@@ -41,6 +48,16 @@ var DataTable = (function($table, userOptions, translations) {
         init: function() {
             functions.hasRequirementsOrThrow();
             functions.makeTable();
+            functions.getEventOptions();
+        },
+
+        /**
+         * Get the custom event options, and merge with the default the events.
+         */
+        getEventOptions: function() {
+            $.each(eventOptions, function(eventKey, eventOption) {
+                events[eventKey] = $.extend({}, events[eventKey], eventOption || {});
+            });
         },
 
         /**
@@ -76,17 +93,15 @@ var DataTable = (function($table, userOptions, translations) {
             var tableColumns = functions.getColumns();
             var tableOrder = functions.getOrder();
             var tableLanguage = translations.get(globals.options.language);
-            var objTable;
 
             var dataTableConfig = {
                 autoWidth: false,
                 columns: tableColumns,
                 initComplete: function() {
-                    var table = this.api();
                     var filterRow = $table.find(elements.filterRowSelector);
 
                     if (filterRow.length > 0) {
-                        functions.filterColumn(table);
+                        functions.filterColumn();
                     }
                 },
                 language: tableLanguage,
@@ -94,7 +109,8 @@ var DataTable = (function($table, userOptions, translations) {
                 orderCellsTop: true,
                 processing: true,
                 responsive: true,
-                serverSide: globals.serverSide
+                serverSide: globals.serverSide,
+                stateSave: globals.options.stateSaving
             };
 
             if(globals.serverSide == true) {
@@ -105,30 +121,74 @@ var DataTable = (function($table, userOptions, translations) {
             }
 
             // eslint-disable-next-line new-cap
-            objTable = $table.DataTable(dataTableConfig);
+            globals.table = $table.DataTable(dataTableConfig);
+
+            globals.state = globals.table.state.loaded();
+
+            functions.setFilterValues();
 
             if (typeof globals.autoReload !== 'undefined') {
-                functions.bindReload(objTable, globals.autoReload);
+                functions.bindReload(globals.autoReload);
             }
 
             if (typeof globals.perPage !== 'undefined') {
-                functions.setPageLength(objTable);
+                functions.setPageLength();
             }
+
+            globals.table.on('init.dt', function() {
+                functions.triggerEvent('init.dt');
+            });
 
             // once the table has been drawn, ensure a responsive reculcation
             // if we do not do this, pagination might cause columns to go outside the table
-            objTable.on('draw.dt', function() {
-                objTable.responsive.recalc();
+            $.each(events, functions.listenToEvent);
+        },
+
+        /**
+         * Add a new event.
+         *
+         * @param {string} on
+         * @param {Function} fn
+         */
+        addEvent: function(on, fn) {
+            if(!events[on]) {
+                events[on] = [];
+            }
+
+            events[on].push(fn);
+        },
+
+        /**
+         * Listen to an event.
+         *
+         * @param {string} eventKey
+         */
+        listenToEvent: function(eventKey) {
+            globals.table.on(eventKey, function() {
+                functions.triggerEvent(eventKey);
+            });
+        },
+
+        /**
+         * Trigger an event.
+         *
+         * @param {key} on
+         */
+        triggerEvent: function(on) {
+            if(!events[on]) {
+                return;
+            }
+
+            $.each(events[on], function(index, fn) {
+                fn();
             });
         },
 
         /**
          * Set the page length.
-         *
-         * @param {object} table
          */
-        setPageLength: function(table) {
-            table.page.len(globals.perPage).draw();
+        setPageLength: function() {
+            globals.table.page.len(globals.perPage).draw();
         },
 
         /**
@@ -214,31 +274,28 @@ var DataTable = (function($table, userOptions, translations) {
 
         /**
          * Filter the columns.
-         *
-         * @param {object} table
          */
-        filterColumn: function(table) {
-            table
+        filterColumn: function() {
+            globals.table
                 .columns()
                 .eq(0)
                 .each(function(colIdx) {
                     var tableFilter = $table.find(elements.filterRowSelector + ' th:eq(' + colIdx + ')');
 
-                    functions.initFilterSelect(table, colIdx, tableFilter);
-                    functions.initFilterInput(table, colIdx, tableFilter);
+                    functions.initFilterSelect(colIdx, tableFilter);
+                    functions.initFilterInput(colIdx, tableFilter);
                 });
         },
 
         /**
          * Initialize the input filter.
          *
-         * @param {object} table
          * @param {string} colIdx
          * @param {object} tableFilter
          */
-        initFilterInput: function(table, colIdx, tableFilter) {
+        initFilterInput: function(colIdx, tableFilter) {
             var debouncedFiltering = functions.debounce(function(searchValue) {
-                table
+                globals.table
                     .column(colIdx)
                     .search(searchValue)
                     .draw();
@@ -255,16 +312,15 @@ var DataTable = (function($table, userOptions, translations) {
         /**
          * Initialize the select filter.
          *
-         * @param {object} table
          * @param {string} colIdx
          * @param {object} tableFilter
          */
-        initFilterSelect: function(table, colIdx, tableFilter) {
-            tableFilter.find('.js-select-filter').on('change', function() {
+        initFilterSelect: function(colIdx, tableFilter) {
+            tableFilter.find(elements.filterSelectColumn).on('change', function() {
                 var select = $(this);
                 var searchValue = select.val();
 
-                table
+                globals.table
                     .column(colIdx)
                     .search(searchValue)
                     .draw();
@@ -274,12 +330,11 @@ var DataTable = (function($table, userOptions, translations) {
         /**
          * Bind the reload.
          *
-         * @param {object} table
          * @param {string} interval
          */
-        bindReload: function(table, interval) {
+        bindReload: function(interval) {
             setInterval(function() {
-                table.ajax.reload();
+                globals.table.ajax.reload();
             }, interval);
         },
 
@@ -310,12 +365,40 @@ var DataTable = (function($table, userOptions, translations) {
                     func.apply(context, args);
                 }
             };
+        },
+
+        /**
+         * Recalc the table.
+         */
+        recalc: function() {
+            globals.table.responsive.recalc();
+        },
+
+        /**
+         * Set the filter values.
+         */
+        setFilterValues: function() {
+            if(!globals.state.columns) {
+                return;
+            }
+
+            $.each(globals.state.columns, function(column, value) {
+                $(elements.filterRowSelector + ' .form-control').eq(column).val(value.search.search);
+            });
         }
+    };
+
+    var events = {
+        'draw.dt': [
+            functions.recalc
+        ]
     };
 
     return {
         options:   globals.options,
         functions: functions,
-        element:   $table
+        element:   $table,
+        events:    events,
+        version:   version
     };
-});
+};
