@@ -68,6 +68,7 @@ $('.js-datatable').each(function() {
         {
             language: 'nl'
         },
+        {},
         translations
     );
 
