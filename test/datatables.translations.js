@@ -35,7 +35,8 @@
             'sLoadingRecords': 'Een moment geduld aub - bezig met laden...',
             'sProcessing':     'Bezig...',
             'sSearch':         'Zoeken:',
-            'sZeroRecords':    'Geen resultaten gevonden'
+            'sZeroRecords':    'Geen resultaten gevonden',
+            'all':             'Alles'
         };
     };
 
@@ -66,7 +67,8 @@
             'sLoadingRecords': 'Loading...',
             'sProcessing':     'Processing...',
             'sSearch':         'Search:',
-            'sZeroRecords':    'No matching records found'
+            'sZeroRecords':    'No matching records found',
+            'all':             'All'
         };
     };
 })(window.Way2web.Table.Translations = window.Way2web.Table.Translations || {});

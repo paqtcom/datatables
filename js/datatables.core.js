@@ -27,18 +27,19 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         language:    'en',
         stateSaving: true,
         dom:         '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">',
-        buttons:     getFilters()
+        buttons:     []
     };
 
     var globals = {
-        options:    $.extend({}, defaultOptions, userOptions || {}),
-        source:     $table.data('source'),
-        autoReload: $table.data('auto-reload'),
-        perPage:    $table.data('per-page'),
-        tableID:    $table.attr('id'),
-        serverSide: true,
-        table:      false,
-        state:      false
+        options:      {},
+        source:       $table.data('source'),
+        autoReload:   $table.data('auto-reload'),
+        perPage:      $table.data('per-page'),
+        tableID:      $table.attr('id'),
+        serverSide:   true,
+        table:        false,
+        state:        false,
+        translations: {}
     };
 
     var events = {
@@ -52,9 +53,30 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * Create the datatable.
      */
     function init() {
+        globals.options = getOptions();
+        globals.translations = getTranslations();
+        globals.options.buttons = getFilters();
         hasRequirementsOrThrow();
         makeTable();
         getEventOptions();
+    }
+
+    /**
+     * Get the options.
+     *
+     * @return {object}
+     */
+    function getOptions() {
+        return $.extend({}, defaultOptions, userOptions || {});
+    }
+
+    /**
+     * Get the translations.
+     *
+     * @return {object}
+     */
+    function getTranslations() {
+        return translations.get(globals.options.language);
     }
 
     /**
@@ -98,7 +120,6 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     function makeTable() {
         var tableColumns = getColumns();
         var tableOrder = getOrder();
-        var tableLanguage = translations.get(globals.options.language);
 
         var dataTableConfig = {
             autoWidth:    false,
@@ -110,7 +131,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                     filterColumn();
                 }
             },
-            language:      tableLanguage,
+            language:      globals.translations,
             order:         tableOrder,
             orderCellsTop: true,
             processing:    true,
@@ -449,7 +470,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         if(buttons.length > 0) {
             buttons.push({
                 extend: 'colvisGroup',
-                text:   'Alles',
+                text:   globals.translations.all,
                 show:   allButtons,
                 hide:   []
             });
@@ -462,6 +483,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         options:   globals.options,
         functions: {
             init:                   init,
+            getOptions:             getOptions,
+            getTranslations:        getTranslations,
             getEventOptions:        getEventOptions,
             hasRequirementsOrThrow: hasRequirementsOrThrow,
             makeTable:              makeTable,
