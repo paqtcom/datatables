@@ -26,7 +26,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     var defaultOptions = {
         language:    'en',
         stateSaving: true,
-        dom:         '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">',
+        dom:         '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right">>trlip<"clear">',
         buttons:     []
     };
 
@@ -474,6 +474,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 show:   allButtons,
                 hide:   []
             });
+
+            globals.options.dom = '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">';
         }
 
         return buttons;
