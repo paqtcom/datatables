@@ -28,6 +28,7 @@
         "func-call-spacing": ["error", "never"],
         "indent": ["error", 4],
         "jsx-quotes": ["error", "prefer-double"],
+        "key-spacing": ["error", { "align": "value" }],
         "line-comment-position": ["error", { "position": "above" }],
         "linebreak-style": ["error", "unix"],
         "max-depth": ["error", 4],
