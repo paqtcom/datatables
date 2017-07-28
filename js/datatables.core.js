@@ -313,9 +313,11 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             .eq(0)
             .each(function(colIdx) {
                 var tableFilter = $table.find(elements.filterRowSelector + ' th:eq(' + colIdx + ')');
+                var tableColumn = $table.find(elements.columnRowSelector + ' th:eq(' + colIdx + ')');
 
                 initFilterSelect(colIdx, tableFilter);
                 initFilterInput(colIdx, tableFilter);
+                initFilterVisible(colIdx, tableColumn);
             });
     }
 
@@ -357,6 +359,24 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 .search(searchValue)
                 .draw();
         });
+    }
+
+    /**
+     * Initialize if the column is visible.
+     *
+     * @param {string} colIdx
+     * @param {object} tableColumn
+     */
+    function initFilterVisible(colIdx, tableColumn) {
+        var visible = tableColumn.data('visible');
+
+        if (typeof visible === 'undefined') {
+            visible = true;
+        }
+
+        globals.table
+            .column(colIdx)
+            .visible(visible);
     }
 
     /**
@@ -473,6 +493,11 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 text:   globals.translations.all,
                 show:   allButtons,
                 hide:   []
+            });
+
+            buttons.push({
+                extend: 'colvis',
+                text:   '<i class="fa fa-columns"></i> Columns'
             });
 
             globals.options.dom = '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">';
