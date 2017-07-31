@@ -33,6 +33,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     var globals = {
         options:      {},
         source:       $table.data('source'),
+        columnFilter: $table.data('column-filter'),
         autoReload:   $table.data('auto-reload'),
         perPage:      $table.data('per-page'),
         tableID:      $table.attr('id'),
@@ -494,12 +495,16 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 show:   allButtons,
                 hide:   []
             });
+        }
 
+        if(globals.columnFilter == 'true') {
             buttons.push({
                 extend: 'colvis',
-                text:   '<i class="fa fa-columns"></i> Columns'
+                text:   '<i class="fa fa-columns"></i> ' + globals.translations.columns
             });
+        }
 
+        if(buttons.length > 0 || globals.columnFilter == 'true') {
             globals.options.dom = '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">';
         }
 

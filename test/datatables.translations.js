@@ -36,7 +36,8 @@
             'sProcessing':     'Bezig...',
             'sSearch':         'Zoeken:',
             'sZeroRecords':    'Geen resultaten gevonden',
-            'all':             'Alles'
+            'all':             'Alles',
+            'columns':         'Kolommen'
         };
     };
 
@@ -68,7 +69,8 @@
             'sProcessing':     'Processing...',
             'sSearch':         'Search:',
             'sZeroRecords':    'No matching records found',
-            'all':             'All'
+            'all':             'All',
+            'columns':         'Columns'
         };
     };
 })(window.Way2web.Table.Translations = window.Way2web.Table.Translations || {});
