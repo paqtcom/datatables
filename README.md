@@ -5,12 +5,12 @@ Making DataTables fun again.
  Create a new table in your view. It must follow the following markup:
 
 ```
-    <table class="js-datatable" data-source="/url/to/json/source">
+<table class="js-datatable" data-source="/url/to/json/source" column-filter="true">
      <thead>
          <tr class="js-table-columns">
              <th data-name="id">ID</th>
-             <th data-name="name" data-default-sort="true" data-default-sort-order="desc">Name</th>
-             <th data-name="created_at">Created at</th>
+             <th data-name="name" data-default-sort="true" data-default-sort-order="desc" data-filter="Test filter">Name</th>
+             <th data-name="created_at" data-visible="false">Created at</th>
              <th data-name="blocked">Blocked</th>
          </tr>
      </thead>
@@ -29,7 +29,7 @@ Making DataTables fun again.
              <th></th>
          </tr>
      </tfoot>
-    </table>
+</table>
 ```
 
 Javascript:
@@ -80,6 +80,7 @@ $('.js-datatable').each(function() {
  This script will look for the '.js-datatable' selector and make a datatable
  out of it. A data attribute "source" is required, with an URL.
  This is the URL the table will get his contents from.
+ With the data attribute "column-filter" you can enable the the button to show/hide columns.
 
 
 ## .js-table-columns
@@ -92,6 +93,8 @@ $('.js-datatable').each(function() {
  attributes to that column:
  data-default-sort="true" to say that this is the default sort column
  data-default-sort-order="desc" to say the sort order
+ data-visible="false" to say the field is hidden on load, with the data attribute data-column-filter you can enable the button to show the column.
+ data-filter="Test filter" to add a filter button, to show only columns with this filter name. You can add multiple filter names per column, seperated with a |
 
 ## .js-table-filters
  This is the selector used to initialize input searching per column.
