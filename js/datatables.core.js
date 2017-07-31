@@ -431,7 +431,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * Set the filter values.
      */
     function setFilterValues() {
-        if(!globals.state.columns) {
+        if(!globals.state || !globals.state.columns) {
             return;
         }
 
@@ -497,14 +497,14 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             });
         }
 
-        if(globals.columnFilter == 'true') {
+        if(globals.columnFilter == true) {
             buttons.push({
                 extend: 'colvis',
                 text:   '<i class="fa fa-columns"></i> ' + globals.translations.columns
             });
         }
 
-        if(buttons.length > 0 || globals.columnFilter == 'true') {
+        if(buttons.length > 0 || globals.columnFilter == true) {
             globals.options.dom = '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">';
         }
 
