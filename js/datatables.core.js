@@ -16,7 +16,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     var elements = {
         columnRowSelector:  '.js-table-columns',
         filterRowSelector:  '.js-table-filters',
-        filterSelectColumn: '.js-select-filter'
+        filterSelectColumn: '.js-select-filter',
+        filterInputColumn:  '.js-input-filter'
     };
 
     var prefix = {
@@ -337,11 +338,18 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 .draw();
         }, 250);
 
-        tableFilter.find('.js-input-filter').on('change', function() {
-            var input = $(this);
-            var searchValue = input.val();
+        tableFilter.find(elements.filterInputColumn).on('change', function() {
+            var searchValue = $(this).val();
 
             debouncedFiltering(searchValue);
+        });
+
+        tableFilter.find(elements.filterInputColumn).each(function() {
+            var searchValue = $(this).val();
+
+            if(searchValue) {
+                debouncedFiltering(searchValue);
+            }
         });
     }
 
@@ -352,14 +360,25 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {object} tableFilter
      */
     function initFilterSelect(colIdx, tableFilter) {
-        tableFilter.find(elements.filterSelectColumn).on('change', function() {
-            var select = $(this);
-            var searchValue = select.val();
-
+        var debouncedFiltering = debounce(function(searchValue) {
             globals.table
                 .column(colIdx)
                 .search(searchValue)
                 .draw();
+        }, 250);
+
+        tableFilter.find(elements.filterSelectColumn).on('change', function() {
+            var searchValue = $(this).val();
+
+            debouncedFiltering(searchValue);
+        });
+
+        tableFilter.find(elements.filterSelectColumn).each(function() {
+            var searchValue = $(this).val();
+
+            if(searchValue) {
+                debouncedFiltering(searchValue);
+            }
         });
     }
 
