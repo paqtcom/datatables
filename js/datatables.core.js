@@ -198,22 +198,23 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      */
     function listenToEvent(eventKey) {
         globals.table.on(eventKey, function() {
-            triggerEvent(eventKey);
+            triggerEvent(eventKey, arguments);
         });
     }
 
     /**
      * Trigger an event.
      *
-     * @param {key} on
+     * @param {key}   on
+     * @param {array} eventArguments
      */
-    function triggerEvent(on) {
+    function triggerEvent(on, eventArguments) {
         if(!events[on]) {
             return;
         }
 
         $.each(events[on], function(index, fn) {
-            fn();
+            fn.apply(this, eventArguments);
         });
     }
 
@@ -336,7 +337,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 .draw();
         }, 250);
 
-        tableFilter.find('.js-input-filter').on('input', function() {
+        tableFilter.find('.js-input-filter').on('change', function() {
             var input = $(this);
             var searchValue = input.val();
 
