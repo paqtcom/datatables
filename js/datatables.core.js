@@ -32,16 +32,17 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     };
 
     var globals = {
-        options:      {},
-        source:       $table.data('source'),
-        columnFilter: $table.data('column-filter'),
-        autoReload:   $table.data('auto-reload'),
-        perPage:      $table.data('per-page'),
-        tableID:      $table.attr('id'),
-        serverSide:   true,
-        table:        false,
-        state:        false,
-        translations: {}
+        options:       {},
+        source:        $table.data('source'),
+        columnFilter:  $table.data('column-filter'),
+        autoReload:    $table.data('auto-reload'),
+        perPage:       $table.data('per-page'),
+        tableID:       $table.attr('id'),
+        serverSide:    true,
+        table:         false,
+        state:         false,
+        translations:  {},
+        debounceDelay: 250
     };
 
     var events = {
@@ -331,32 +332,22 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {object} tableFilter
      */
     function initFilterInput(colIdx, tableFilter) {
-        var debouncedFiltering = debounce(function(searchValue) {
+        var debouncedFiltering = debounce(function(columnEvent, input) {
+            var searchValue = $(this).val();
+
+            if(input && !searchValue) {
+                return;
+            }
+
             globals.table
                 .column(colIdx)
                 .search(searchValue)
                 .draw();
-        }, 250);
+        }, globals.debounceDelay);
 
-        tableFilter.find(elements.filterInputColumn).on('input', function() {
-            var searchValue = $(this).val();
-
-            debouncedFiltering(searchValue);
-        });
-
-        tableFilter.find(elements.filterInputColumn).on('change', function() {
-            var searchValue = $(this).val();
-
-            debouncedFiltering(searchValue);
-        });
-
-        tableFilter.find(elements.filterInputColumn).each(function() {
-            var searchValue = $(this).val();
-
-            if(searchValue) {
-                debouncedFiltering(searchValue);
-            }
-        });
+        tableFilter.find(elements.filterInputColumn).on('input', debouncedFiltering);
+        tableFilter.find(elements.filterInputColumn).on('change', debouncedFiltering);
+        tableFilter.find(elements.filterInputColumn).each(debouncedFiltering);
     }
 
     /**
@@ -366,26 +357,21 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {object} tableFilter
      */
     function initFilterSelect(colIdx, tableFilter) {
-        var debouncedFiltering = debounce(function(searchValue) {
+        var debouncedFiltering = debounce(function(columnEvent, input) {
+            var searchValue = $(this).val();
+
+            if(input && !searchValue) {
+                return;
+            }
+
             globals.table
                 .column(colIdx)
                 .search(searchValue)
                 .draw();
-        }, 250);
+        }, globals.debounceDelay);
 
-        tableFilter.find(elements.filterSelectColumn).on('change', function() {
-            var searchValue = $(this).val();
-
-            debouncedFiltering(searchValue);
-        });
-
-        tableFilter.find(elements.filterSelectColumn).each(function() {
-            var searchValue = $(this).val();
-
-            if(searchValue) {
-                debouncedFiltering(searchValue);
-            }
-        });
+        tableFilter.find(elements.filterSelectColumn).on('change', debouncedFiltering);
+        tableFilter.find(elements.filterSelectColumn).each(debouncedFiltering);
     }
 
     /**
