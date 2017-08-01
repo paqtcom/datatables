@@ -11,7 +11,7 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
-    var version = '0.1.1';
+    var version = '0.1.2';
 
     var elements = {
         columnRowSelector:  '.js-table-columns',
