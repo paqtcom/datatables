@@ -338,6 +338,12 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 .draw();
         }, 250);
 
+        tableFilter.find(elements.filterInputColumn).on('input', function() {
+            var searchValue = $(this).val();
+
+            debouncedFiltering(searchValue);
+        });
+
         tableFilter.find(elements.filterInputColumn).on('change', function() {
             var searchValue = $(this).val();
 
