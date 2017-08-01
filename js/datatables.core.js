@@ -523,6 +523,15 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         return buttons;
     }
 
+    /**
+     * Get the datatable object.
+     *
+     * @return {object}
+     */
+    function getTable() {
+        return globals.table;
+    }
+
     return {
         options:   globals.options,
         functions: {
@@ -549,6 +558,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         },
         element: $table,
         events:  events,
+        table:   getTable,
         version: version
     };
 };
