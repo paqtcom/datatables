@@ -11,12 +11,13 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
-    var version = '0.1.1';
+    var version = '0.1.2';
 
     var elements = {
         columnRowSelector:  '.js-table-columns',
         filterRowSelector:  '.js-table-filters',
-        filterSelectColumn: '.js-select-filter'
+        filterSelectColumn: '.js-select-filter',
+        filterInputColumn:  '.js-input-filter'
     };
 
     var prefix = {
@@ -31,16 +32,17 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     };
 
     var globals = {
-        options:      {},
-        source:       $table.data('source'),
-        columnFilter: $table.data('column-filter'),
-        autoReload:   $table.data('auto-reload'),
-        perPage:      $table.data('per-page'),
-        tableID:      $table.attr('id'),
-        serverSide:   true,
-        table:        false,
-        state:        false,
-        translations: {}
+        options:       {},
+        source:        $table.data('source'),
+        columnFilter:  $table.data('column-filter'),
+        autoReload:    $table.data('auto-reload'),
+        perPage:       $table.data('per-page'),
+        tableID:       $table.attr('id'),
+        serverSide:    true,
+        table:         false,
+        state:         false,
+        translations:  {},
+        debounceDelay: 250
     };
 
     var events = {
@@ -198,22 +200,23 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      */
     function listenToEvent(eventKey) {
         globals.table.on(eventKey, function() {
-            triggerEvent(eventKey);
+            triggerEvent(eventKey, arguments);
         });
     }
 
     /**
      * Trigger an event.
      *
-     * @param {key} on
+     * @param {key}   on
+     * @param {array} eventArguments
      */
-    function triggerEvent(on) {
+    function triggerEvent(on, eventArguments) {
         if(!events[on]) {
             return;
         }
 
         $.each(events[on], function(index, fn) {
-            fn();
+            fn.apply(this, eventArguments);
         });
     }
 
@@ -329,19 +332,22 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {object} tableFilter
      */
     function initFilterInput(colIdx, tableFilter) {
-        var debouncedFiltering = debounce(function(searchValue) {
+        var debouncedFiltering = debounce(function(columnEvent, input) {
+            var searchValue = $(this).val();
+
+            if(input && !searchValue) {
+                return;
+            }
+
             globals.table
                 .column(colIdx)
                 .search(searchValue)
                 .draw();
-        }, 250);
+        }, globals.debounceDelay);
 
-        tableFilter.find('.js-input-filter').on('input', function() {
-            var input = $(this);
-            var searchValue = input.val();
-
-            debouncedFiltering(searchValue);
-        });
+        tableFilter.find(elements.filterInputColumn).on('input', debouncedFiltering);
+        tableFilter.find(elements.filterInputColumn).on('change', debouncedFiltering);
+        tableFilter.find(elements.filterInputColumn).each(debouncedFiltering);
     }
 
     /**
@@ -351,15 +357,21 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {object} tableFilter
      */
     function initFilterSelect(colIdx, tableFilter) {
-        tableFilter.find(elements.filterSelectColumn).on('change', function() {
-            var select = $(this);
-            var searchValue = select.val();
+        var debouncedFiltering = debounce(function(columnEvent, input) {
+            var searchValue = $(this).val();
+
+            if(input && !searchValue) {
+                return;
+            }
 
             globals.table
                 .column(colIdx)
                 .search(searchValue)
                 .draw();
-        });
+        }, globals.debounceDelay);
+
+        tableFilter.find(elements.filterSelectColumn).on('change', debouncedFiltering);
+        tableFilter.find(elements.filterSelectColumn).each(debouncedFiltering);
     }
 
     /**
@@ -511,6 +523,15 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         return buttons;
     }
 
+    /**
+     * Get the datatable object.
+     *
+     * @return {object}
+     */
+    function getTable() {
+        return globals.table;
+    }
+
     return {
         options:   globals.options,
         functions: {
@@ -537,6 +558,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         },
         element: $table,
         events:  events,
+        table:   getTable,
         version: version
     };
 };
