@@ -1,0 +1,20 @@
+image: way2web/pipeline-apps:latest
+
+pipelines:
+    default:
+        - step:
+            caches:
+                - yarn
+            script:
+                - ./bitbucket-pipelines/assets.sh
+    branches:
+        default:
+            - step:
+                caches:
+                    - yarn
+                script:
+                    - ./bitbucket-pipelines/assets.sh
+
+definitions:
+    caches:
+        yarn: /usr/local/share/.cache/yarn/

@@ -1,6 +1,8 @@
 # DataTables
 Making DataTables fun again.
 
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
+
 ## How to use this script:
  Create a new table in your view. It must follow the following markup:
 
@@ -131,3 +133,8 @@ $('.js-datatable').each(function() {
  > This is the translations object, this contains e.g. the get function.
  > The get function from translations receives the language in the first parameter.
  > The get function must return an object with all the translation texts for datatable.
+
+
+ [downloads-image]: https://img.shields.io/npm/dm/way2web-datatables.svg
+ [npm-url]: https://www.npmjs.com/package/way2web-datatables
+ [npm-image]: https://img.shields.io/npm/v/way2web-datatables.svg
