@@ -11,7 +11,7 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
-    var version = '0.1.4';
+    var version = '0.1.5';
 
     var elements = {
         columnRowSelector:  '.js-table-columns',
@@ -366,7 +366,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
 
             globals.table
                 .column(colIdx)
-                .search(searchValue)
+                .data()
+                .filter(function(value) {
+                    return (value == searchValue);
+                })
                 .draw();
         }, globals.debounceDelay);
 
