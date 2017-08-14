@@ -54,6 +54,7 @@ export const taskConfig = {
     scripts: [
         new Task(
            [
+                'jquery/dist/jquery.js',
                 'datatables.net/js/jquery.dataTables.js',
                 'datatables.net-bs/js/dataTables.bootstrap.js',
                 'datatables.net-buttons/js/dataTables.buttons.js',

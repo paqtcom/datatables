@@ -14,6 +14,13 @@ pipelines:
                     - yarn
                 script:
                     - ./bitbucket-pipelines/assets.sh
+        release:
+            - step:
+                caches:
+                    - yarn
+                script:
+                    - ./bitbucket-pipelines/assets.sh
+                    - ./bitbucket-pipelines/npm.sh
 
 definitions:
     caches:

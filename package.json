@@ -1,6 +1,6 @@
 {
     "name": "way2web-datatables",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Making DataTables fun again.",
     "files": [
         "js/datatables.core.js"
@@ -14,10 +14,18 @@
         "datatables",
         "javascript"
     ],
-    "author": "Pieter Wigboldus [Way2Web] <pieter@way2web.nl>",
-    "license": "GPL-3.0",
+    "author": {
+        "name": "Way2Web",
+        "url": "https://www.way2web.nl/"
+    },
+    "license": "MIT",
     "homepage": "https://bitbucket.org/way2dev/datatables#readme",
-    "devDependencies": {
+    "scripts": {
+       "build": "./bitbucket-pipelines/assets.sh",
+       "lint": "eslint js/*.js --config .eslintrc",
+       "publish-to-npm": "./bitbucket-pipelines/npm.sh"
+   },
+   "devDependencies": {
        "autoprefixer": "6.7.2",
        "babel-preset-es2015": "6.22.0",
        "babel-register": "6.22.0",
@@ -42,7 +50,7 @@
        "rev-del": "1.0.5"
    },
    "dependencies": {
-        "jquery": ">=1.7",
+        "jquery": ">=3.2.1",
         "datatables.net": "1.10.13",
         "datatables.net-bs": "1.10.13",
         "datatables.net-buttons": "1.2.4",
