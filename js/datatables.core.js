@@ -177,6 +177,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         // once the table has been drawn, ensure a responsive reculcation
         // if we do not do this, pagination might cause columns to go outside the table
         $.each(events, listenToEvent);
+
+        if(globals.serverSide != true) {
+            filterColumn();
+        }
     }
 
     /**
