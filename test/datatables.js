@@ -23,7 +23,7 @@
         var item = new DataTable(
             $(this),
             {
-                language: 'nl'
+                language: 'en'
             },
             {},
             Table.Translations

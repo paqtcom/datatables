@@ -367,6 +367,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     function initFilterSelect(colIdx, tableFilter) {
         var debouncedFiltering = debounce(function(columnEvent, input) {
             var searchValue = $(this).val();
+            var regExSearch = '^' + searchValue + '$';
 
             if(input && !searchValue) {
                 return;
@@ -374,7 +375,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
 
             globals.table
                 .column(colIdx)
-                .search(searchValue)
+                .search(regExSearch, true, false)
                 .draw();
         }, globals.debounceDelay);
 
