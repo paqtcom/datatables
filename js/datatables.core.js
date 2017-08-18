@@ -374,10 +374,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
 
             globals.table
                 .column(colIdx)
-                .data()
-                .filter(function(value) {
-                    return (value == searchValue);
-                })
+                .search(searchValue)
                 .draw();
         }, globals.debounceDelay);
 
