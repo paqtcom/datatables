@@ -11,7 +11,7 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
-    var version = '0.1.4';
+    var version = '0.1.5';
 
     var elements = {
         columnRowSelector:  '.js-table-columns',
@@ -177,6 +177,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         // once the table has been drawn, ensure a responsive reculcation
         // if we do not do this, pagination might cause columns to go outside the table
         $.each(events, listenToEvent);
+
+        if(globals.serverSide != true) {
+            filterColumn();
+        }
     }
 
     /**
@@ -312,6 +316,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * Filter the columns.
      */
     function filterColumn() {
+        if(!globals.table) {
+            return;
+        }
+
         globals.table
             .columns()
             .eq(0)
@@ -359,6 +367,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     function initFilterSelect(colIdx, tableFilter) {
         var debouncedFiltering = debounce(function(columnEvent, input) {
             var searchValue = $(this).val();
+            var regExSearch = '^' + searchValue + '$';
 
             if(input && !searchValue) {
                 return;
@@ -366,7 +375,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
 
             globals.table
                 .column(colIdx)
-                .search(searchValue)
+                .search(regExSearch, true, false)
                 .draw();
         }, globals.debounceDelay);
 

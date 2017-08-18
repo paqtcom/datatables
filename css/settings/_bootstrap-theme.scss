@@ -1,0 +1,43 @@
+/*
+ * Bootstrap theming settings
+ */
+$body-bg: setting(color, white);
+$font-size-small: setting(font-size, small);
+
+$brand-primary: setting(color, brand-secondary);
+$brand-danger: setting(state, danger);
+$brand-success: setting(state, success);
+$brand-info: setting(state, info);
+$brand-warning: setting(state, warning);
+
+$state-success-text: $brand-success;
+$state-success-bg: lighten($brand-success, 50%);
+$state-success-border: transparent;
+
+$state-danger-text: $brand-danger;
+$state-danger-bg: lighten($brand-danger, 50%);
+$state-danger-border: transparent;
+
+$state-info-text: $brand-info;
+$state-info-bg: lighten($brand-info, 50%);
+$state-info-border: transparent;
+
+$state-warning-text: $brand-warning;
+$state-warning-bg: lighten($brand-warning, 50%);
+$state-warning-border: transparent;
+
+$progress-border-radius: 250px;
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+$headings-font-weight: 400;
+
+$card-border-color: setting(color, border);
+
+$breadcrumb-bg: transparent;
+
+$navbar-border-radius: 0;
+
+$form-group-margin-bottom: setting(spacing, element);
+
+$modal-header-border-color: transparent;

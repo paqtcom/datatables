@@ -1,0 +1,13 @@
+/*
+ * Spacing settings
+ */
+$settings-spacing: (
+
+    spacing: (
+        element-large: $_line-height-computed * 2,
+        element: $_line-height-computed,
+        element-narrow: $_line-height-computed / 2,
+        inline: $_line-height-computed / 4
+    )
+
+);

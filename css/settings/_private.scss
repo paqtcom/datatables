@@ -1,0 +1,20 @@
+/*
+ * Private settings
+ * These settings should be used in the other settings files
+ */
+
+/*
+ * Set base font-size/line-height so line-height-computed can be used in other settings,
+ * eg. to overwrite the default font-size and line-height of Bootstrap
+ */
+$_font-size-base: 16px;
+$_line-height-base: 1.5;
+$_line-height-computed: $_font-size-base * $_line-height-base;
+
+// set black so it can be used in the settings map
+/*
+ * Set base black and white color so it can be used in the settings
+ */
+$_black: #000;
+$_white: #fff;
+$_grey: #686868;

@@ -1,0 +1,19 @@
+/*
+ * Clearfix
+ * With option to clearfix before an element
+ */
+@mixin clearfix($placement: after) {
+
+    $possible: before after;
+
+    @if index($possible, $placement) {
+        &:#{$placement} {
+            content: '';
+            display: table;
+            clear: both;
+        }
+    } @else {
+        @warn 'D’oh! ‘#{$placement}’ is not a valid value for the clearfix. Only after or before are valid.';
+    }
+
+}

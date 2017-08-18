@@ -1,0 +1,36 @@
+/*
+ * Color settings
+ *
+ * [1] more blueish than the default gray so the sidebar stands out a bit
+ */
+$settings-color: (
+
+    color: (
+        brand-primary: #f37022,
+        brand-secondary: #24338a,
+
+        sidebar-background: #f7f8fa,
+        sidebar-alt-background: #edeffa,  /* [1] */
+        sidebar-active-background: #eff0f5,
+
+        white: $_white,
+        black: $_black,
+
+        gray: $_grey,
+        gray-light: lighten($_grey, 46.7%),
+        gray-lighter: lighten($_grey, 55%),
+
+        active-bg-color: #edeffa,
+        hover-bg-color: #eff0f5,
+
+        border: #ddd
+    ),
+
+    state: (
+        danger: #8a2435,
+        success: #248a52,
+        info: #246c8a,
+        warning: #8a5b24
+    )
+
+);

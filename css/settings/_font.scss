@@ -1,0 +1,19 @@
+/*
+ * Font settings
+ */
+$settings-font: (
+
+    font-size: (
+        default: $_font-size-base,
+        small: 13px
+    ),
+
+    line-height: (
+        default: $_line-height-base
+    ),
+
+    font-weight: (
+        normal: 400,
+        bold: 600
+    )
+);
