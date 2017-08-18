@@ -1,0 +1,20 @@
+/*
+ * Bootstrap global settings
+ */
+$enable-flex: true;
+$enable-rounded: false;
+
+$icon-font-path: '../fonts/bootstrap/';
+
+$spacer: $_line-height-computed;
+$grid-gutter-width-base: $_line-height-computed;
+$line-height-computed: $_line-height-computed;
+
+$font-size-base: setting(font-size, default);
+$line-height-base: setting(line-height, default);
+
+/*
+ * [1] This variable is not yet available, so set it with the default value
+ */
+$screen-md: 992px; /* [1] */
+$grid-float-breakpoint: $screen-md;

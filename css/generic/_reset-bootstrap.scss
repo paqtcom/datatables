@@ -1,0 +1,35 @@
+// Disable some lint rules for necessary overriding Bootstrap styling
+// stylelint-disable selector-max-specificity
+
+
+/*
+ * Remove the default margin-top of headings given by Bootstrap in favor
+ * of single-direction margin declarations
+ */
+h1,
+.h1,
+h2,
+h3,
+.h3,
+h4,
+h5,
+.h5,
+h6,
+.h6 {
+    margin-top: 0;
+}
+
+.page-header {
+    margin-top: 0;
+    padding-bottom: 0;
+}
+
+/*
+ * If a checkbox is nested in a is-required form-group (like with a file) remove
+ * the required styling
+ */
+.is-required .checkbox .control-label::after {
+    content: none;
+}
+
+// stylelint-enable selector-max-specificity

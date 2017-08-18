@@ -15,6 +15,7 @@ import rev from 'gulp-rev';
  */
 function bust() {
     return gulp.src([
+        dist.styles + '*.css',
         dist.scripts + '*.js'
     ])
         .on('end', utilities.logBegin('Create revision file(s)'))

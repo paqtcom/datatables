@@ -312,6 +312,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * Filter the columns.
      */
     function filterColumn() {
+        if(!globals.table) {
+            return;
+        }
+
         globals.table
             .columns()
             .eq(0)

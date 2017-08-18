@@ -1,0 +1,15 @@
+/*
+ * Border settings
+ */
+$settings-border: (
+
+    border: (
+        default: solid 1px #ddd
+    ),
+
+    border-width: (
+        default: 1px,
+        label: 2px
+    )
+
+);

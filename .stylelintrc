@@ -1,0 +1,19 @@
+{
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "extends": "stylelint-config-sass-guidelines",
+  "rules": {
+    "declaration-property-value-blacklist": {
+        "-webkit-font-smoothing": ["antialiased"],
+        "-moz-osx-font-smoothing": ["grayscale"],
+        "position": ["fixed"]
+    },
+    "indentation": 4,
+    "declaration-no-important": true,
+    "color-named": ["never", { ignore: ["inside-function"] } ],
+    "selector-max-specificity": "0,3,0",
+    "declaration-block-properties-order":  "",
+    "selector-class-pattern": ""
+  }
+}
