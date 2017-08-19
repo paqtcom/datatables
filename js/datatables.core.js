@@ -11,7 +11,7 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
-    var version = '0.1.5';
+    var version = '0.1.6';
 
     var elements = {
         columnRowSelector:  '.js-table-columns',
@@ -48,7 +48,9 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     var events = {
         'draw.dt': [
             recalc
-        ]
+        ],
+        'init.dt':      [],
+        'initComplete': []
     };
 
     /**
@@ -60,8 +62,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         globals.translations = getTranslations();
         globals.options.buttons = getFilters();
         hasRequirementsOrThrow();
-        makeTable();
         getEventOptions();
+        makeTable();
     }
 
     /**
@@ -70,7 +72,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @return {object}
      */
     function getOptions() {
-        return $.extend({}, defaultOptions, userOptions || {});
+        return $.extend(defaultOptions, userOptions);
     }
 
     /**
@@ -133,6 +135,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 if (filterRow.length > 0) {
                     filterColumn();
                 }
+
+                triggerEvent('initComplete');
             },
             language:      globals.translations,
             order:         tableOrder,
@@ -445,6 +449,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * Recalc the table.
      */
     function recalc() {
+        if(!globals.table) {
+            return;
+        }
+
         globals.table.responsive.recalc();
     }
 

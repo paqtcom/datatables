@@ -25,11 +25,30 @@
             {
                 language: 'en'
             },
-            {},
+            {
+                'draw.dt':      [drawOk],
+                'initComplete': [initComplete]
+            },
             Table.Translations
         );
 
         item.functions.init();
         Table.items.push(item);
     };
+
+    /**
+     * Example function called after an event.
+     */
+    function initComplete() {
+        // eslint-disable-next-line no-console
+        console.log('Init Complete');
+    }
+
+    /**
+     * Example function called after an event.
+     */
+    function drawOk() {
+        // eslint-disable-next-line no-console
+        console.log('Draw OK');
+    }
 })(window.Way2web.Table = window.Way2web.Table || {});
