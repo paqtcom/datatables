@@ -1,6 +1,6 @@
 {
     "name": "way2web-datatables",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "Making DataTables fun again.",
     "files": [
         "js/datatables.core.js"
@@ -12,7 +12,12 @@
     },
     "keywords": [
         "datatables",
-        "javascript"
+        "javascript",
+        "filter",
+        "sort",
+        "DataTables",
+        "jQuery",
+        "table"
     ],
     "author": {
         "name": "Way2Web",
