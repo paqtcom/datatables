@@ -12,7 +12,7 @@ import del from 'del';
  * Task: copy files from source to destination
  */
 function clean() {
-    return del([dist.scripts], {
+    return del([dist.root], {
         force: true
     });
 }
