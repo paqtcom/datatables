@@ -22,10 +22,12 @@ const paths = {
 export const folders = {
     scripts: `${paths.root}js/`,
     styles: `${paths.root}css/`,
+    test: `${paths.root}test/`,
     npm: 'node_modules/'
 };
 
 export const dist = {
+    root: `${paths.dist}`,
     scripts: `${paths.dist}js/`,
     styles: `${paths.dist}css/`,
     fonts: `${paths.dist}fonts/`
@@ -94,7 +96,12 @@ export const taskConfig = {
             ['bootstrap-sass/assets/fonts/**/*'],
             folders.npm,
             dist.fonts
-        )
+        ),
+        new Task(
+            ['*'],
+            folders.test,
+            dist.root
+        ),
     ],
 };
 

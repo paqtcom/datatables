@@ -172,10 +172,10 @@ array-initial@^1.0.0:
     is-number "^3.0.0"
 
 array-last@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/array-last/-/array-last-1.1.1.tgz#f4658f988d921326b58ad0113cf76d337c7b20aa"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/array-last/-/array-last-1.2.0.tgz#0884a67ec2ac2a08133fc00f66779cfedb010986"
   dependencies:
-    is-number "^0.1.1"
+    is-number "^3.0.0"
 
 array-slice@^1.0.0:
   version "1.0.0"
@@ -903,8 +903,8 @@ camelcase@^3.0.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-3.0.0.tgz#32fc4b9fcdaf845fcdf7e73bb97cac2261f0ab0a"
 
 caniuse-db@^1.0.30000187, caniuse-db@^1.0.30000618, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000715"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000715.tgz#0b9b5c795950dfbaf301a8806bafe87f126da8ca"
+  version "1.0.30000716"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000716.tgz#b0717765d157662e8c74a61562c84c9fc3604a49"
 
 caseless@~0.11.0:
   version "0.11.0"
@@ -1628,8 +1628,8 @@ error-ex@^1.2.0:
     is-arrayish "^0.2.1"
 
 es5-ext@^0.10.14, es5-ext@^0.10.9, es5-ext@~0.10.14:
-  version "0.10.28"
-  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.28.tgz#666900d781f2bc39954913454f133699e7c117c9"
+  version "0.10.29"
+  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.29.tgz#768eb2dfc4957bcf35fa0568f193ab71ede53fd8"
   dependencies:
     es6-iterator "2"
     es6-symbol "~3.1"
@@ -2772,10 +2772,6 @@ is-number-like@^1.0.3:
   dependencies:
     lodash.isfinite "^3.3.2"
 
-is-number@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/is-number/-/is-number-0.1.1.tgz#69a7af116963d47206ec9bd9b48a14216f1e3806"
-
 is-number@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-2.1.0.tgz#01fcbbb393463a548f2f466cce16dece49db908f"
@@ -2884,7 +2880,7 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
 
-isobject@^2.0.0, isobject@^2.1.0:
+isobject@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
   dependencies:
@@ -3758,10 +3754,10 @@ object.omit@^2.0.0:
     is-extendable "^0.1.1"
 
 object.pick@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/object.pick/-/object.pick-1.2.0.tgz#b5392bee9782da6d9fb7d6afaf539779f1234c2b"
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/object.pick/-/object.pick-1.3.0.tgz#87a10ac4c1694bd2e1cbf53591a66141fb5dd747"
   dependencies:
-    isobject "^2.1.0"
+    isobject "^3.0.1"
 
 object.reduce@^1.0.0:
   version "1.0.1"
@@ -4531,23 +4527,14 @@ scss-tokenizer@^0.2.3:
     source-map "^0.4.2"
 
 semver-greatest-satisfied-range@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/semver-greatest-satisfied-range/-/semver-greatest-satisfied-range-1.0.0.tgz#4fb441e2a8d26c40b598327557318de272a558a0"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/semver-greatest-satisfied-range/-/semver-greatest-satisfied-range-1.1.0.tgz#13e8c2658ab9691cb0cd71093240280d36f77a5b"
   dependencies:
-    semver "^4.2.0"
-    semver-regex "^1.0.0"
-
-semver-regex@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/semver-regex/-/semver-regex-1.0.0.tgz#92a4969065f9c70c694753d55248fc68f8f652c9"
+    sver-compat "^1.5.0"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
-
-semver@^4.2.0:
-  version "4.3.6"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.6.tgz#300bc6e0e86374f7ba61068b5b1ecd57fc6532da"
 
 semver@~5.3.0:
   version "5.3.0"
@@ -5036,6 +5023,13 @@ supports-color@^4.0.0:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-4.2.1.tgz#65a4bb2631e90e02420dba5554c375a4754bb836"
   dependencies:
     has-flag "^2.0.0"
+
+sver-compat@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/sver-compat/-/sver-compat-1.5.0.tgz#3cf87dfeb4d07b4a3f14827bc186b3fd0c645cd8"
+  dependencies:
+    es6-iterator "^2.0.1"
+    es6-symbol "^3.1.1"
 
 svg-tags@^1.0.0:
   version "1.0.0"
