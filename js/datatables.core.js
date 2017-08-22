@@ -11,7 +11,7 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
-    var version = '0.1.7';
+    var version = '0.1.8';
 
     var elements = {
         columnRowSelector:  '.js-table-columns',
@@ -371,10 +371,14 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     function initFilterSelect(colIdx, tableFilter) {
         var debouncedFiltering = debounce(function(columnEvent, input) {
             var searchValue = $(this).val();
-            var regExSearch = '^' + searchValue + '$';
+            var regExSearch = '';
 
             if(input && !searchValue) {
                 return;
+            }
+
+            if(searchValue) {
+                regExSearch = '^' + searchValue + '$';
             }
 
             globals.table
