@@ -484,6 +484,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         var buttons = [];
         var allButtons = [];
 
+        if(globals.options.buttons) {
+            buttons = globals.options.buttons;
+        }
+
         tableColumns.each(function() {
             var column = $(this);
             var columnName = column.data('name');
