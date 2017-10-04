@@ -1,7 +1,7 @@
 # DataTables
 Making DataTables fun again.
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-stats]
 
 ## How to use this script:
  Create a new table in your view. It must follow the following markup:
@@ -156,6 +156,7 @@ $('.js-datatable').each(function() {
  ```
 
 
- [downloads-image]: https://img.shields.io/npm/dm/way2web-datatables.svg
+ [downloads-image]: https://img.shields.io/npm/dt/way2web-datatables.svg
  [npm-url]: https://www.npmjs.com/package/way2web-datatables
  [npm-image]: https://img.shields.io/npm/v/way2web-datatables.svg
+ [npm-stats]: https://npm-stat.com/charts.html?package=way2web-datatables
