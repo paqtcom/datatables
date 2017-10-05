@@ -11,7 +11,7 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
-    var version = '0.1.8';
+    var version = '0.2.0';
 
     var elements = {
         columnRowSelector:  '.js-table-columns',
@@ -483,6 +483,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         var filters = {};
         var buttons = [];
         var allButtons = [];
+
+        if(globals.options.buttons) {
+            buttons = globals.options.buttons;
+        }
 
         tableColumns.each(function() {
             var column = $(this);
