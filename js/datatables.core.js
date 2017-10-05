@@ -541,6 +541,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             });
         }
 
+        if($table.data('buttons')) {
+            buttons.pushMultiple($table.data('buttons').split('|'));
+        }
+
         if(buttons.length > 0 || globals.columnFilter == true) {
             globals.options.dom = '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">';
         }

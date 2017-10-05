@@ -5415,6 +5415,10 @@ vinyl@^2.0.0:
     remove-trailing-separator "^1.0.1"
     replace-ext "^1.0.0"
 
+way2web-helpers@0.1.x:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/way2web-helpers/-/way2web-helpers-0.1.6.tgz#9189ea46431fbace6906e325147669be5a049a46"
+
 weinre@^2.0.0-pre-I0Z7U9OV:
   version "2.0.0-pre-I0Z7U9OV"
   resolved "https://registry.yarnpkg.com/weinre/-/weinre-2.0.0-pre-I0Z7U9OV.tgz#fef8aa223921f7b40bbbbd4c3ed4302f6fd0a813"
