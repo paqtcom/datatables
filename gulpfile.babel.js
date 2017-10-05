@@ -79,7 +79,6 @@ export const taskConfig = {
                 'datatables.net-buttons/js/buttons.print.js',
                 'datatables.net-responsive/js/dataTables.responsive.js',
                 'datatables.net-responsive-bs/js/responsive.bootstrap.js',
-                'way2web-helpers/js/helpers.core.js',
            ],
            folders.npm,
            dist.scripts + 'vendor.js'

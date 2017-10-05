@@ -26,7 +26,19 @@
                 language: 'en',
                 dom:      '<\'row\'<\'col-sm-6\'l><\'col-sm-6\'f>>' +
                           '<\'row\'<\'col-sm-12\'tr>>' +
-                          '<\'row\'<\'col-sm-5\'i><\'col-sm-7\'p>>'
+                          '<\'row\'<\'col-sm-5\'i><\'col-sm-7\'p>>',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text:   'CSV'
+                    }, {
+                        extend: 'excelHtml5',
+                        text:   'Excel'
+                    }, {
+                        extend: 'pdfHtml5',
+                        text:   'PDF'
+                    }
+                ]
             },
             {
                 'draw.dt':      [drawOk],
