@@ -525,7 +525,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             });
         });
 
-        if(buttons.length > 0) {
+        if(!jQuery.isEmptyObject(filters) && buttons.length > 0) {
             buttons.push({
                 extend: 'colvisGroup',
                 text:   globals.translations.all,
