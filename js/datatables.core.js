@@ -469,7 +469,15 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         }
 
         $.each(globals.state.columns, function(column, value) {
-            $(elements.filterRowSelector + ' .form-control').eq(column).val(value.search.search);
+            var searchValue = value.search.search;
+
+            if(value.search.regex) {
+                searchValue = searchValue.slice(1, -1);
+            }
+
+            $(elements.filterRowSelector + ' .form-control')
+                .eq(column)
+                .val(searchValue);
         });
     }
 
