@@ -469,7 +469,18 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         }
 
         $.each(globals.state.columns, function(column, value) {
-            $(elements.filterRowSelector + ' .form-control').eq(column).val(value.search.search);
+            var searchValue = value.search.search;
+
+            // On a dropdown, regex is used for the search, to receive only values with the exact value.
+            // Check the function initFilterSelect, before and after the search value, a char is added.
+            // We have to remove the first and last char from the saved search value to select the dropdown value.
+            if(value.search.regex) {
+                searchValue = searchValue.slice(1, -1);
+            }
+
+            $(elements.filterRowSelector + ' .form-control')
+                .eq(column)
+                .val(searchValue);
         });
     }
 
