@@ -1287,74 +1287,61 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-datatables.net-bs@1.10.15:
-  version "1.10.15"
-  resolved "https://registry.yarnpkg.com/datatables.net-bs/-/datatables.net-bs-1.10.15.tgz#b2c2261007d84ca5b5abf56c18edc227e0da1a4d"
+datatables.net-bs@1.10.16, datatables.net-bs@^1.10.15:
+  version "1.10.16"
+  resolved "https://registry.yarnpkg.com/datatables.net-bs/-/datatables.net-bs-1.10.16.tgz#b0854f5b374f713ae3db4156c7cea8a760c3de76"
   dependencies:
-    datatables.net ">=1.10.9"
+    datatables.net "1.10.16"
     jquery ">=1.7"
 
-datatables.net-bs@>=1.10.9:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-bs/-/datatables.net-bs-2.1.1.tgz#704108972891949d094bf44f53d0654d9fee7bce"
+datatables.net-buttons-bs@1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/datatables.net-buttons-bs/-/datatables.net-buttons-bs-1.4.2.tgz#87bc5d92770431565b208ab26dacea3a57a943c8"
   dependencies:
-    datatables.net ">=1.10.9"
+    datatables.net-bs "^1.10.15"
+    datatables.net-buttons "1.4.2"
     jquery ">=1.7"
 
-datatables.net-buttons-bs@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-buttons-bs/-/datatables.net-buttons-bs-1.3.1.tgz#ff03f77ebb04fa2a2b88e704946401b8db0da515"
+datatables.net-buttons@1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/datatables.net-buttons/-/datatables.net-buttons-1.4.2.tgz#e391e1da4c20e381bc67bb1b8ce0ae36c9a3da49"
   dependencies:
-    datatables.net-bs ">=1.10.9"
-    datatables.net-buttons ">=1.0.3"
+    datatables.net "^1.10.15"
     jquery ">=1.7"
 
-datatables.net-buttons@1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-buttons/-/datatables.net-buttons-1.3.1.tgz#86e3f207dc6c4433e9ecb982d994958367f2c9e5"
+datatables.net-dt@^1.10.15:
+  version "1.10.16"
+  resolved "https://registry.yarnpkg.com/datatables.net-dt/-/datatables.net-dt-1.10.16.tgz#6758a308fb9e5f9629fb6541cc301e48ec9ec555"
   dependencies:
-    datatables.net ">=1.10.9"
+    datatables.net "1.10.16"
     jquery ">=1.7"
 
-datatables.net-buttons@>=1.0.3:
+datatables.net-responsive-bs@2.2.0:
   version "2.2.0"
-  resolved "https://registry.yarnpkg.com/datatables.net-buttons/-/datatables.net-buttons-2.2.0.tgz#3636d5bbab8ef1ade1322db7a7724251960a2706"
+  resolved "https://registry.yarnpkg.com/datatables.net-responsive-bs/-/datatables.net-responsive-bs-2.2.0.tgz#b0a99a527f84935b8bed781b56b45fb14c3e9463"
   dependencies:
-    datatables.net ">=1.10.9"
+    datatables.net-bs "^1.10.15"
+    datatables.net-responsive "2.2.0"
     jquery ">=1.7"
 
-datatables.net-responsive-bs@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-responsive-bs/-/datatables.net-responsive-bs-2.1.1.tgz#8770c0fad439a7839b1633cf454e01f227dde877"
+datatables.net-responsive-dt@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/datatables.net-responsive-dt/-/datatables.net-responsive-dt-2.2.0.tgz#5fdb5f1006b0d452fce9df3635877a403e4f13ed"
   dependencies:
-    datatables.net-bs ">=1.10.9"
-    datatables.net-responsive ">=1.0.7"
+    datatables.net-dt "^1.10.15"
+    datatables.net-responsive "2.2.0"
     jquery ">=1.7"
 
-datatables.net-responsive-dt@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-responsive-dt/-/datatables.net-responsive-dt-2.1.1.tgz#bbb3b869efcaaa824fce9929a07e310fe589116d"
+datatables.net-responsive@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/datatables.net-responsive/-/datatables.net-responsive-2.2.0.tgz#16aea1cc1128bb496f65fe0922b5e327f200a035"
   dependencies:
-    datatables.net ">=1.10.9"
-    datatables.net-responsive ">=1.0.7"
+    datatables.net "^1.10.15"
     jquery ">=1.7"
 
-datatables.net-responsive@2.1.1, datatables.net-responsive@>=1.0.7:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/datatables.net-responsive/-/datatables.net-responsive-2.1.1.tgz#cbbd617882267ab2663e9745ad1b4e748158ed11"
-  dependencies:
-    datatables.net ">=1.10.9"
-    jquery ">=1.7"
-
-datatables.net@1.10.15:
-  version "1.10.15"
-  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.10.15.tgz#c789077bbfe385e75ff5a233fa5f23251a72df68"
-  dependencies:
-    jquery ">=1.7"
-
-datatables.net@>=1.10.9:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-2.1.1.tgz#6f1103ef08054642aecf85e7e25efd592822ee78"
+datatables.net@1.10.16, datatables.net@^1.10.15:
+  version "1.10.16"
+  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.10.16.tgz#4b052d1082824261b68eed9d22741b711d3d2469"
   dependencies:
     jquery ">=1.7"
 

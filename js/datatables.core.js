@@ -11,7 +11,7 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
-    var version = '0.2.3';
+    var version = '0.2.4';
 
     var elements = {
         columnRowSelector:  '.js-table-columns',
@@ -478,7 +478,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 searchValue = searchValue.slice(1, -1);
             }
 
-            $(elements.filterRowSelector + ' .form-control')
+            $table.find(elements.filterRowSelector + ' .form-control')
                 .eq(column)
                 .val(searchValue);
         });
