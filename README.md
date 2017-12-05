@@ -93,10 +93,11 @@ $('.js-datatable').each(function() {
  data-orderable="false" and/or data-searchable="false".
  If you would like to set a default sorting column, you can add the following
  attributes to that column:
- data-default-sort="true" to say that this is the default sort column
- data-default-sort-order="desc" to say the sort order
- data-visible="false" to say the field is hidden on load, with the data attribute data-column-filter you can enable the button to show the column.
- data-filter="Test filter" to add a filter button, to show only columns with this filter name. You can add multiple filter names per column, seperated with a |
+ * data-default-sort="true" to say that this is the default sort column
+ * data-default-sort-order="desc" to say the sort order
+ * data-visible="false" to say the field is hidden on load, with the data attribute data-column-filter you can enable the button to show the column.
+ * data-filter="Test filter" to add a filter button, to show only columns with this filter name. You can add multiple filter names per column, seperated with a |
+ * data-data="relation_name.column" if you have a relation name that consists of two or more words. (see http://dt54.yajrabox.com/eloquent#relation)
 
 ## .js-table-filters
  This is the selector used to initialize input searching per column.
