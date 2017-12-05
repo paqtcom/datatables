@@ -11,7 +11,7 @@
 window.DataTable = function($table, userOptions, eventOptions, translations) {
     'use strict';
 
-    var version = '0.2.4';
+    var version = '0.2.5';
 
     var elements = {
         columnRowSelector:  '.js-table-columns',
@@ -255,8 +255,13 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             // get the column values
             var column = $(this);
             var columnName = column.data('name');
+            var columnData = column.data('data');
             var columnOrderable = column.data('orderable');
             var columnSearchable = column.data('searchable');
+
+            if (typeof columnData === 'undefined') {
+                columnData = columnName;
+            }
 
             if (typeof columnOrderable === 'undefined' ||
                 !validOptionsSortOrder.indexOf(columnOrderable)) {
@@ -269,7 +274,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             }
 
             columns.push({
-                data:       columnName,
+                data:       columnData,
                 name:       columnName,
                 orderable:  columnOrderable,
                 searchable: columnSearchable
