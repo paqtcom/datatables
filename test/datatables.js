@@ -38,7 +38,8 @@
                         extend: 'pdfHtml5',
                         text:   'PDF'
                     }
-                ]
+                ],
+                perPage: 25
             },
             {
                 'draw.dt':      [drawOk],

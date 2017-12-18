@@ -1,6 +1,6 @@
 {
     "name": "way2web-datatables",
-    "version": "0.2.5",
+    "version": "0.2.6",
     "description": "Making DataTables fun again.",
     "files": [
         "js/datatables.core.js"
