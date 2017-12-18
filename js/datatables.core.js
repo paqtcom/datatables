@@ -171,6 +171,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         }
 
         if (typeof globals.perPage !== 'undefined') {
+            globals.options.perPage = globals.perPage;
+        }
+
+        if (typeof globals.options.perPage !== 'undefined') {
             setPageLength();
         }
 
@@ -232,7 +236,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * Set the page length.
      */
     function setPageLength() {
-        globals.table.page.len(globals.perPage).draw();
+        globals.table.page.len(globals.options.perPage).draw();
     }
 
     /**
