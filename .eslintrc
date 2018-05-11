@@ -1,13 +1,14 @@
 {
     "extends": "eslint:recommended",
     "env": {
-        "es6": false,
+        "es6": true,
         "node": false,
         "jquery": true,
         "browser": true
     },
     "globals": {
-        "DataTable": false
+        "DataTable": false,
+        "DataTables": false
     },
     "rules": {
         "no-console": "error",

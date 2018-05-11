@@ -30,8 +30,13 @@ if [ -f package.json ]; then
     fi
 
     if [ -f node_modules/gulp/bin/gulp.js ]; then
-        echo "= gulp ="
-        node_modules/gulp/bin/gulp.js $continueFlag
+        if [ $2 ]; then
+            echo "= gulp dev ="
+            npm run build-dev
+        else
+            echo "= gulp prod ="
+            npm run build
+        fi
         if [ $? != 0 ]; then
             exit 1
         fi

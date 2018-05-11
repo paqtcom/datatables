@@ -1,12 +1,15 @@
-(function(Way2web) {
-    'use strict';
-
+/**
+ *  Bootstrap the application when the dom is ready.
+ */
+class Way2web {
     /**
-     * Call function if the dom is ready.
+     * Initialize all the diffrent components.
      */
-    Way2web.onDomReady = function() {
-        Way2web.Table.init();
-    };
-})(window.Way2web = window.Way2web || {});
+    constructor() {
+        this.datatables = new DataTables();
+    }
+}
 
-$(document).ready(window.Way2web.onDomReady);
+$(document).ready(() => {
+    window.Way2web = new Way2web();
+});
