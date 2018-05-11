@@ -1,68 +1,75 @@
 /**
  * Making DataTables fun again.
- * TODO: use a class.
- *
- * @param {object} $table
- * @param {object} userOptions
- * @param {object} eventOptions
- * @param {object} translations
  *
  * @return {object}
  */
-window.DataTable = function($table, userOptions, eventOptions, translations) {
-    'use strict';
+class DataTable {
+    /**
+     * Initialize all the diffrent components.
+     *
+     * @param {object} $table
+     * @param {object} userOptions
+     * @param {object} eventOptions
+     * @param {object} translations
+     */
+    constructor($table, userOptions, eventOptions, translations) {
+        this.version = '0.3.0';
 
-    var version = '0.3.0';
+        this.table = $table;
+        this.userOptions = userOptions;
+        this.eventOptions = eventOptions;
+        this.translations = translations;
 
-    var elements = {
-        columnRowSelector: '.js-table-columns',
-        filterRowSelector: '.js-table-filters',
-        filterSelectColumn: '.js-select-filter',
-        filterInputColumn: '.js-input-filter'
-    };
+        this.elements = {
+            columnRowSelector: '.js-table-columns',
+            filterRowSelector: '.js-table-filters',
+            filterSelectColumn: '.js-select-filter',
+            filterInputColumn: '.js-input-filter'
+        };
 
-    var prefix = {
-        throw: 'w2wDataTables: '
-    };
+        this.prefix = {
+            throw: 'w2wDataTables: '
+        };
 
-    var defaultOptions = {
-        language: 'en',
-        stateSaving: true,
-        dom: '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right">>trlip<"clear">',
-        buttons: []
-    };
+        this.defaultOptions = {
+            language: 'en',
+            stateSaving: true,
+            dom: '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right">>trlip<"clear">',
+            buttons: []
+        };
 
-    var globals = {
-        options: {},
-        source: $table.data('source'),
-        columnFilter: $table.data('column-filter'),
-        autoReload: $table.data('auto-reload'),
-        perPage: $table.data('per-page'),
-        tableID: $table.attr('id'),
-        serverSide: true,
-        table: false,
-        state: false,
-        translations: {},
-        debounceDelay: 250
-    };
+        this.globals = {
+            options: {},
+            source: $table.data('source'),
+            columnFilter: $table.data('column-filter'),
+            autoReload: $table.data('auto-reload'),
+            perPage: $table.data('per-page'),
+            tableID: $table.attr('id'),
+            serverSide: true,
+            table: false,
+            state: false,
+            translations: {},
+            debounceDelay: 250
+        };
 
-    var events = {
-        'draw.dt': [recalc],
-        'init.dt': [],
-        initComplete: []
-    };
+        this.events = {
+            'draw.dt': [this.recalc],
+            'init.dt': [],
+            initComplete: []
+        };
+    }
 
     /**
      * Check if all fields are ok.
      * Create the datatable.
      */
-    function init() {
-        globals.options = getOptions();
-        globals.translations = getTranslations();
-        globals.options.buttons = getFilters();
-        hasRequirementsOrThrow();
-        getEventOptions();
-        makeTable();
+    init() {
+        this.globals.options = this.getOptions();
+        this.globals.translations = this.getTranslations();
+        this.globals.options.buttons = this.getFilters();
+        this.hasRequirementsOrThrow();
+        this.getEventOptions();
+        this.makeTable();
     }
 
     /**
@@ -70,8 +77,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      *
      * @return {object}
      */
-    function getOptions() {
-        return $.extend(defaultOptions, userOptions);
+    getOptions() {
+        return $.extend(this.defaultOptions, this.userOptions);
     }
 
     /**
@@ -79,51 +86,51 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      *
      * @return {object}
      */
-    function getTranslations() {
-        return translations.get(globals.options.language);
+    getTranslations() {
+        return this.translations.get(this.globals.options.language);
     }
 
     /**
      * Get the custom event options, and merge with the default the events.
      */
-    function getEventOptions() {
-        $.each(eventOptions, function(eventKey, eventOption) {
-            events[eventKey] = $.extend({}, events[eventKey], eventOption || {});
+    getEventOptions() {
+        $.each(this.eventOptions, function(eventKey, eventOption) {
+            this.events[eventKey] = $.extend({}, this.events[eventKey], eventOption || {});
         });
     }
 
     /**
      * Check if all fields are ok.
      */
-    function hasRequirementsOrThrow() {
-        var columnRow = $table.find(elements.columnRowSelector);
+    hasRequirementsOrThrow() {
+        var columnRow = this.table.find(this.elements.columnRowSelector);
 
-        if (typeof globals.source === 'undefined' || globals.source === '') {
-            globals.serverSide = false;
+        if (typeof this.globals.source === 'undefined' || this.globals.source === '') {
+            this.globals.serverSide = false;
         }
 
-        if (typeof globals.tableID === 'undefined' || globals.tableID === '') {
-            throw prefix.throw + 'missing id attribute!';
+        if (typeof this.globals.tableID === 'undefined' || this.globals.tableID === '') {
+            throw this.prefix.throw + 'missing id attribute!';
         }
 
         if (columnRow.length === 0) {
-            throw prefix.throw + 'missing column row (' + elements.columnRowSelector + ')!';
+            throw this.prefix.throw + 'missing column row (' + this.elements.columnRowSelector + ')!';
         }
 
-        if (typeof globals.autoReload !== 'undefined' && !globals.autoReload > 0) {
-            throw prefix.throw + 'invalid reload interval!';
+        if (typeof this.globals.autoReload !== 'undefined' && !this.globals.autoReload > 0) {
+            throw this.prefix.throw + 'invalid reload interval!';
         }
-        if (typeof globals.perPage !== 'undefined' && !globals.perPage > 0) {
-            throw prefix.throw + 'invalid amount per page!';
+        if (typeof this.globals.perPage !== 'undefined' && !this.globals.perPage > 0) {
+            throw this.prefix.throw + 'invalid amount per page!';
         }
     }
 
     /**
      * Create the datatable.
      */
-    function makeTable() {
-        var tableColumns = getColumns();
-        var tableOrder = getOrder();
+    makeTable() {
+        var tableColumns = this.getColumns();
+        var tableOrder = this.getOrder();
 
         var dataTableConfig = {
             autoWidth: false,
@@ -133,64 +140,64 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
              * init complete.
              */
             initComplete: function() {
-                var filterRow = $table.find(elements.filterRowSelector);
+                var filterRow = this.table.find(this.elements.filterRowSelector);
 
                 if (filterRow.length > 0) {
-                    filterColumn();
+                    this.filterColumn();
                 }
 
-                triggerEvent('initComplete');
+                this.triggerEvent('initComplete');
             },
-            language: globals.translations,
+            language: this.globals.translations,
             order: tableOrder,
             orderCellsTop: true,
             processing: true,
             responsive: true,
-            serverSide: globals.serverSide,
-            stateSave: globals.options.stateSaving,
-            dom: globals.options.dom
+            serverSide: this.globals.serverSide,
+            stateSave: this.globals.options.stateSaving,
+            dom: this.globals.options.dom
         };
 
-        if (globals.options.buttons) {
-            dataTableConfig.buttons = globals.options.buttons;
+        if (this.globals.options.buttons) {
+            dataTableConfig.buttons = this.globals.options.buttons;
         }
 
-        if (globals.serverSide == true) {
+        if (this.globals.serverSide == true) {
             dataTableConfig.ajax = {
                 method: 'POST',
-                url: globals.source
+                url: this.globals.source
             };
         }
 
         // eslint-disable-next-line new-cap
-        globals.table = $table.DataTable(dataTableConfig);
+        this.globals.table = this.table.DataTable(dataTableConfig);
 
-        globals.state = globals.table.state.loaded();
+        this.globals.state = this.globals.table.state.loaded();
 
-        setFilterValues();
+        this.setFilterValues();
 
-        if (typeof globals.autoReload !== 'undefined') {
-            bindReload(globals.autoReload);
+        if (typeof this.globals.autoReload !== 'undefined') {
+            this.bindReload(this.globals.autoReload);
         }
 
-        if (typeof globals.perPage !== 'undefined') {
-            globals.options.perPage = globals.perPage;
+        if (typeof this.globals.perPage !== 'undefined') {
+            this.globals.options.perPage = this.globals.perPage;
         }
 
-        if (typeof globals.options.perPage !== 'undefined') {
-            setPageLength();
+        if (typeof this.globals.options.perPage !== 'undefined') {
+            this.setPageLength();
         }
 
-        globals.table.on('init.dt', function() {
-            triggerEvent('init.dt');
+        this.globals.table.on('init.dt', function() {
+            this.triggerEvent('init.dt');
         });
 
         // once the table has been drawn, ensure a responsive reculcation
         // if we do not do this, pagination might cause columns to go outside the table
-        $.each(events, listenToEvent);
+        $.each(this.events, this.listenToEvent);
 
-        if (globals.serverSide != true) {
-            filterColumn();
+        if (this.globals.serverSide != true) {
+            this.filterColumn();
         }
     }
 
@@ -200,12 +207,12 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {string} on
      * @param {Function} fn
      */
-    function addEvent(on, fn) {
-        if (!events[on]) {
-            events[on] = [];
+    addEvent(on, fn) {
+        if (!this.events[on]) {
+            this.events[on] = [];
         }
 
-        events[on].push(fn);
+        this.events[on].push(fn);
     }
 
     /**
@@ -213,9 +220,9 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      *
      * @param {string} eventKey
      */
-    function listenToEvent(eventKey) {
-        globals.table.on(eventKey, function() {
-            triggerEvent(eventKey, arguments);
+    listenToEvent(eventKey) {
+        this.globals.table.on(eventKey, function() {
+            this.triggerEvent(eventKey, arguments);
         });
     }
 
@@ -225,12 +232,12 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {key}   on
      * @param {array} eventArguments
      */
-    function triggerEvent(on, eventArguments) {
-        if (!events[on]) {
+    triggerEvent(on, eventArguments) {
+        if (!this.events[on]) {
             return;
         }
 
-        $.each(events[on], function(index, fn) {
+        $.each(this.events[on], function(index, fn) {
             fn.apply(this, eventArguments);
         });
     }
@@ -238,8 +245,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     /**
      * Set the page length.
      */
-    function setPageLength() {
-        globals.table.page.len(globals.options.perPage).draw();
+    setPageLength() {
+        this.globals.table.page.len(this.globals.options.perPage).draw();
     }
 
     /**
@@ -247,8 +254,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      *
      * @return {array}
      */
-    function getColumns() {
-        var tableColumns = $table.find(elements.columnRowSelector + ' th');
+    getColumns() {
+        var tableColumns = this.table.find(this.elements.columnRowSelector + ' th');
         var columns = [];
 
         tableColumns.each(function() {
@@ -291,10 +298,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      *
      * @return {array}
      */
-    function getOrder() {
+    getOrder() {
         var defaultOrder = [[0, 'desc']];
         var validSortOrders = ['asc', 'desc'];
-        var sortColumn = $table.find('[data-default-sort="true"]');
+        var sortColumn = this.table.find('[data-default-sort="true"]');
         var sortColumnOrder = sortColumn.data('default-sort-order');
 
         if (sortColumn.length === 0) {
@@ -303,13 +310,13 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         }
 
         if (typeof sortColumnOrder === 'undefined') {
-            throw prefix.throw +
+            throw this.prefix.throw +
                 'You must add a sorting order (default-sort-order="asc/desc")' +
                 ' if you are filtering on a custom column!';
         }
 
         if (validSortOrders.indexOf(sortColumnOrder) == -1) {
-            throw prefix.throw +
+            throw this.prefix.throw +
                 'You must add a valid sorting order (asc/desc) if you are filtering on a custom column!';
         }
 
@@ -319,21 +326,21 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     /**
      * Filter the columns.
      */
-    function filterColumn() {
-        if (!globals.table) {
+    filterColumn() {
+        if (!this.globals.table) {
             return;
         }
 
-        globals.table
+        this.globals.table
             .columns()
             .eq(0)
             .each(function(colIdx) {
-                var tableFilter = $table.find(elements.filterRowSelector + ' th:eq(' + colIdx + ')');
-                var tableColumn = $table.find(elements.columnRowSelector + ' th:eq(' + colIdx + ')');
+                var tableFilter = this.table.find(this.elements.filterRowSelector + ' th:eq(' + colIdx + ')');
+                var tableColumn = this.table.find(this.elements.columnRowSelector + ' th:eq(' + colIdx + ')');
 
-                initFilterSelect(colIdx, tableFilter);
-                initFilterInput(colIdx, tableFilter);
-                initFilterVisible(colIdx, tableColumn);
+                this.initFilterSelect(colIdx, tableFilter);
+                this.initFilterInput(colIdx, tableFilter);
+                this.initFilterVisible(colIdx, tableColumn);
             });
     }
 
@@ -343,23 +350,23 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {string} colIdx
      * @param {object} tableFilter
      */
-    function initFilterInput(colIdx, tableFilter) {
-        var debouncedFiltering = debounce(function(columnEvent, input) {
+    initFilterInput(colIdx, tableFilter) {
+        var debouncedFiltering = this.debounce(function(columnEvent, input) {
             var searchValue = $(this).val();
 
             if (input && !searchValue) {
                 return;
             }
 
-            globals.table
+            this.globals.table
                 .column(colIdx)
                 .search(searchValue)
                 .draw();
-        }, globals.debounceDelay);
+        }, this.globals.debounceDelay);
 
-        tableFilter.find(elements.filterInputColumn).on('input', debouncedFiltering);
-        tableFilter.find(elements.filterInputColumn).on('change', debouncedFiltering);
-        tableFilter.find(elements.filterInputColumn).each(debouncedFiltering);
+        tableFilter.find(this.elements.filterInputColumn).on('input', debouncedFiltering);
+        tableFilter.find(this.elements.filterInputColumn).on('change', debouncedFiltering);
+        tableFilter.find(this.elements.filterInputColumn).each(debouncedFiltering);
     }
 
     /**
@@ -368,8 +375,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {string} colIdx
      * @param {object} tableFilter
      */
-    function initFilterSelect(colIdx, tableFilter) {
-        var debouncedFiltering = debounce(function(columnEvent, input) {
+    initFilterSelect(colIdx, tableFilter) {
+        var debouncedFiltering = this.debounce(function(columnEvent, input) {
             var searchValue = $(this).val();
             var regExSearch = '';
 
@@ -381,14 +388,14 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 regExSearch = '^' + searchValue + '$';
             }
 
-            globals.table
+            this.globals.table
                 .column(colIdx)
                 .search(regExSearch, true, false)
                 .draw();
-        }, globals.debounceDelay);
+        }, this.globals.debounceDelay);
 
-        tableFilter.find(elements.filterSelectColumn).on('change', debouncedFiltering);
-        tableFilter.find(elements.filterSelectColumn).each(debouncedFiltering);
+        tableFilter.find(this.elements.filterSelectColumn).on('change', debouncedFiltering);
+        tableFilter.find(this.elements.filterSelectColumn).each(debouncedFiltering);
     }
 
     /**
@@ -397,14 +404,14 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {string} colIdx
      * @param {object} tableColumn
      */
-    function initFilterVisible(colIdx, tableColumn) {
+    initFilterVisible(colIdx, tableColumn) {
         var visible = tableColumn.data('visible');
 
         if (typeof visible === 'undefined') {
             visible = true;
         }
 
-        globals.table.column(colIdx).visible(visible);
+        this.globals.table.column(colIdx).visible(visible);
     }
 
     /**
@@ -412,9 +419,9 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      *
      * @param {string} interval
      */
-    function bindReload(interval) {
+    bindReload(interval) {
         setInterval(function() {
-            globals.table.ajax.reload();
+            this.globals.table.ajax.reload();
         }, interval);
     }
 
@@ -427,7 +434,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      *
      * @return {object}
      */
-    function debounce(func, wait, immediate) {
+    debounce(func, wait, immediate) {
         var timeout;
 
         return function() {
@@ -450,23 +457,23 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     /**
      * Recalc the table.
      */
-    function recalc() {
-        if (!globals.table) {
+    recalc() {
+        if (!this.globals.table) {
             return;
         }
 
-        globals.table.responsive.recalc();
+        this.globals.table.responsive.recalc();
     }
 
     /**
      * Set the filter values.
      */
-    function setFilterValues() {
-        if (!globals.state || !globals.state.columns) {
+    setFilterValues() {
+        if (!this.globals.state || !this.globals.state.columns) {
             return;
         }
 
-        $.each(globals.state.columns, function(column, value) {
+        $.each(this.globals.state.columns, function(column, value) {
             var searchValue = value.search.search;
 
             // On a dropdown, regex is used for the search, to receive only values with the exact value.
@@ -476,8 +483,8 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 searchValue = searchValue.slice(1, -1);
             }
 
-            $table
-                .find(elements.filterRowSelector + ' .form-control')
+            this.table
+                .find(this.elements.filterRowSelector + ' .form-control')
                 .eq(column)
                 .val(searchValue);
         });
@@ -488,14 +495,14 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      *
      * @return {array}
      */
-    function getFilters() {
-        var tableColumns = $table.find(elements.columnRowSelector + ' th');
+    getFilters() {
+        var tableColumns = this.table.find(this.elements.columnRowSelector + ' th');
         var filters = {};
         var buttons = [];
         var allButtons = [];
 
-        if (globals.options.buttons) {
-            buttons = globals.options.buttons;
+        if (this.globals.options.buttons) {
+            buttons = this.globals.options.buttons;
         }
 
         tableColumns.each(function() {
@@ -538,16 +545,16 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         if (!jQuery.isEmptyObject(filters) && buttons.length > 0) {
             buttons.push({
                 extend: 'colvisGroup',
-                text: globals.translations.all,
+                text: this.globals.translations.all,
                 show: allButtons,
                 hide: []
             });
         }
 
-        if (globals.columnFilter == true) {
+        if (this.globals.columnFilter == true) {
             buttons.push({
                 extend: 'colvis',
-                text: '<i class="fa fa-columns"></i> ' + globals.translations.columns
+                text: '<i class="fa fa-columns"></i> ' + this.globals.translations.columns
             });
         }
 
@@ -559,37 +566,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      *
      * @return {object}
      */
-    function getTable() {
-        return globals.table;
+    getTable() {
+        return this.globals.table;
     }
-
-    return {
-        options: globals.options,
-        functions: {
-            init: init,
-            getOptions: getOptions,
-            getTranslations: getTranslations,
-            getEventOptions: getEventOptions,
-            hasRequirementsOrThrow: hasRequirementsOrThrow,
-            makeTable: makeTable,
-            addEvent: addEvent,
-            listenToEvent: listenToEvent,
-            triggerEvent: triggerEvent,
-            setPageLength: setPageLength,
-            getColumns: getColumns,
-            getOrder: getOrder,
-            filterColumn: filterColumn,
-            initFilterInput: initFilterInput,
-            initFilterSelect: initFilterSelect,
-            bindReload: bindReload,
-            debounce: debounce,
-            recalc: recalc,
-            setFilterValues: setFilterValues,
-            getFilters: getFilters
-        },
-        element: $table,
-        events: events,
-        table: getTable,
-        version: version
-    };
-};
+}
