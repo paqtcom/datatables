@@ -1,5 +1,6 @@
 /**
  * Making DataTables fun again.
+ * TODO: use a class.
  *
  * @param {object} $table
  * @param {object} userOptions
