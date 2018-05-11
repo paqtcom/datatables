@@ -14,10 +14,10 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     var version = '0.3.0';
 
     var elements = {
-        columnRowSelector:  '.js-table-columns',
-        filterRowSelector:  '.js-table-filters',
+        columnRowSelector: '.js-table-columns',
+        filterRowSelector: '.js-table-filters',
         filterSelectColumn: '.js-select-filter',
-        filterInputColumn:  '.js-input-filter'
+        filterInputColumn: '.js-input-filter'
     };
 
     var prefix = {
@@ -25,32 +25,30 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     };
 
     var defaultOptions = {
-        language:    'en',
+        language: 'en',
         stateSaving: true,
-        dom:         '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right">>trlip<"clear">',
-        buttons:     []
+        dom: '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right">>trlip<"clear">',
+        buttons: []
     };
 
     var globals = {
-        options:       {},
-        source:        $table.data('source'),
-        columnFilter:  $table.data('column-filter'),
-        autoReload:    $table.data('auto-reload'),
-        perPage:       $table.data('per-page'),
-        tableID:       $table.attr('id'),
-        serverSide:    true,
-        table:         false,
-        state:         false,
-        translations:  {},
+        options: {},
+        source: $table.data('source'),
+        columnFilter: $table.data('column-filter'),
+        autoReload: $table.data('auto-reload'),
+        perPage: $table.data('per-page'),
+        tableID: $table.attr('id'),
+        serverSide: true,
+        table: false,
+        state: false,
+        translations: {},
         debounceDelay: 250
     };
 
     var events = {
-        'draw.dt': [
-            recalc
-        ],
-        'init.dt':      [],
-        'initComplete': []
+        'draw.dt': [recalc],
+        'init.dt': [],
+        initComplete: []
     };
 
     /**
@@ -127,8 +125,12 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         var tableOrder = getOrder();
 
         var dataTableConfig = {
-            autoWidth:    false,
-            columns:      tableColumns,
+            autoWidth: false,
+            columns: tableColumns,
+
+            /**
+             * init complete.
+             */
             initComplete: function() {
                 var filterRow = $table.find(elements.filterRowSelector);
 
@@ -138,24 +140,24 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
 
                 triggerEvent('initComplete');
             },
-            language:      globals.translations,
-            order:         tableOrder,
+            language: globals.translations,
+            order: tableOrder,
             orderCellsTop: true,
-            processing:    true,
-            responsive:    true,
-            serverSide:    globals.serverSide,
-            stateSave:     globals.options.stateSaving,
-            dom:           globals.options.dom
+            processing: true,
+            responsive: true,
+            serverSide: globals.serverSide,
+            stateSave: globals.options.stateSaving,
+            dom: globals.options.dom
         };
 
-        if(globals.options.buttons) {
+        if (globals.options.buttons) {
             dataTableConfig.buttons = globals.options.buttons;
         }
 
-        if(globals.serverSide == true) {
+        if (globals.serverSide == true) {
             dataTableConfig.ajax = {
                 method: 'POST',
-                url:    globals.source
+                url: globals.source
             };
         }
 
@@ -186,7 +188,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         // if we do not do this, pagination might cause columns to go outside the table
         $.each(events, listenToEvent);
 
-        if(globals.serverSide != true) {
+        if (globals.serverSide != true) {
             filterColumn();
         }
     }
@@ -198,7 +200,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {Function} fn
      */
     function addEvent(on, fn) {
-        if(!events[on]) {
+        if (!events[on]) {
             events[on] = [];
         }
 
@@ -223,7 +225,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @param {array} eventArguments
      */
     function triggerEvent(on, eventArguments) {
-        if(!events[on]) {
+        if (!events[on]) {
             return;
         }
 
@@ -252,10 +254,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             // set default options
             var defOrderable = true;
             var defSearchable = true;
-            var validOptionsSortOrder = [
-                true,
-                false
-            ];
+            var validOptionsSortOrder = [true, false];
             // get the column values
             var column = $(this);
             var columnName = column.data('name');
@@ -267,20 +266,18 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 columnData = columnName;
             }
 
-            if (typeof columnOrderable === 'undefined' ||
-                !validOptionsSortOrder.indexOf(columnOrderable)) {
+            if (typeof columnOrderable === 'undefined' || !validOptionsSortOrder.indexOf(columnOrderable)) {
                 columnOrderable = defOrderable;
             }
 
-            if (typeof columnSearchable === 'undefined' ||
-                !validOptionsSortOrder.indexOf(columnSearchable)) {
+            if (typeof columnSearchable === 'undefined' || !validOptionsSortOrder.indexOf(columnSearchable)) {
                 columnSearchable = defSearchable;
             }
 
             columns.push({
-                data:       columnData,
-                name:       columnName,
-                orderable:  columnOrderable,
+                data: columnData,
+                name: columnName,
+                orderable: columnOrderable,
                 searchable: columnSearchable
             });
         });
@@ -294,9 +291,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * @return {array}
      */
     function getOrder() {
-        var defaultOrder = [
-            [0, 'desc']
-        ];
+        var defaultOrder = [[0, 'desc']];
         var validSortOrders = ['asc', 'desc'];
         var sortColumn = $table.find('[data-default-sort="true"]');
         var sortColumnOrder = sortColumn.data('default-sort-order');
@@ -317,19 +312,14 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
                 'You must add a valid sorting order (asc/desc) if you are filtering on a custom column!';
         }
 
-        return [
-            [
-                sortColumn.index(),
-                sortColumnOrder
-            ]
-        ];
+        return [[sortColumn.index(), sortColumnOrder]];
     }
 
     /**
      * Filter the columns.
      */
     function filterColumn() {
-        if(!globals.table) {
+        if (!globals.table) {
             return;
         }
 
@@ -356,7 +346,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         var debouncedFiltering = debounce(function(columnEvent, input) {
             var searchValue = $(this).val();
 
-            if(input && !searchValue) {
+            if (input && !searchValue) {
                 return;
             }
 
@@ -382,11 +372,11 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             var searchValue = $(this).val();
             var regExSearch = '';
 
-            if(input && !searchValue) {
+            if (input && !searchValue) {
                 return;
             }
 
-            if(searchValue) {
+            if (searchValue) {
                 regExSearch = '^' + searchValue + '$';
             }
 
@@ -413,9 +403,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             visible = true;
         }
 
-        globals.table
-            .column(colIdx)
-            .visible(visible);
+        globals.table.column(colIdx).visible(visible);
     }
 
     /**
@@ -462,7 +450,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * Recalc the table.
      */
     function recalc() {
-        if(!globals.table) {
+        if (!globals.table) {
             return;
         }
 
@@ -473,7 +461,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
      * Set the filter values.
      */
     function setFilterValues() {
-        if(!globals.state || !globals.state.columns) {
+        if (!globals.state || !globals.state.columns) {
             return;
         }
 
@@ -483,11 +471,12 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             // On a dropdown, regex is used for the search, to receive only values with the exact value.
             // Check the function initFilterSelect, before and after the search value, a char is added.
             // We have to remove the first and last char from the saved search value to select the dropdown value.
-            if(value.search.regex) {
+            if (value.search.regex) {
                 searchValue = searchValue.slice(1, -1);
             }
 
-            $table.find(elements.filterRowSelector + ' .form-control')
+            $table
+                .find(elements.filterRowSelector + ' .form-control')
                 .eq(column)
                 .val(searchValue);
         });
@@ -504,7 +493,7 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
         var buttons = [];
         var allButtons = [];
 
-        if(globals.options.buttons) {
+        if (globals.options.buttons) {
             buttons = globals.options.buttons;
         }
 
@@ -513,18 +502,18 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
             var columnName = column.data('name');
             var columnFilters = column.data('filter');
 
-            if(!columnFilters) {
+            if (!columnFilters) {
                 allButtons.push(columnName + ':name');
 
                 return;
             }
 
             $.each(columnFilters.split('|'), function(index, columnFilter) {
-                if(!filters[columnFilter]) {
+                if (!filters[columnFilter]) {
                     filters[columnFilter] = [];
                 }
 
-                if(filters[columnFilter].indexOf(columnName + ':name') < 0) {
+                if (filters[columnFilter].indexOf(columnName + ':name') < 0) {
                     filters[columnFilter].push(columnName + ':name');
                 }
             });
@@ -539,25 +528,25 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
 
             buttons.push({
                 extend: 'colvisGroup',
-                text:   filterName,
-                show:   fields,
-                hide:   hideButtons
+                text: filterName,
+                show: fields,
+                hide: hideButtons
             });
         });
 
-        if(!jQuery.isEmptyObject(filters) && buttons.length > 0) {
+        if (!jQuery.isEmptyObject(filters) && buttons.length > 0) {
             buttons.push({
                 extend: 'colvisGroup',
-                text:   globals.translations.all,
-                show:   allButtons,
-                hide:   []
+                text: globals.translations.all,
+                show: allButtons,
+                hide: []
             });
         }
 
-        if(globals.columnFilter == true) {
+        if (globals.columnFilter == true) {
             buttons.push({
                 extend: 'colvis',
-                text:   '<i class="fa fa-columns"></i> ' + globals.translations.columns
+                text: '<i class="fa fa-columns"></i> ' + globals.translations.columns
             });
         }
 
@@ -574,32 +563,32 @@ window.DataTable = function($table, userOptions, eventOptions, translations) {
     }
 
     return {
-        options:   globals.options,
+        options: globals.options,
         functions: {
-            init:                   init,
-            getOptions:             getOptions,
-            getTranslations:        getTranslations,
-            getEventOptions:        getEventOptions,
+            init: init,
+            getOptions: getOptions,
+            getTranslations: getTranslations,
+            getEventOptions: getEventOptions,
             hasRequirementsOrThrow: hasRequirementsOrThrow,
-            makeTable:              makeTable,
-            addEvent:               addEvent,
-            listenToEvent:          listenToEvent,
-            triggerEvent:           triggerEvent,
-            setPageLength:          setPageLength,
-            getColumns:             getColumns,
-            getOrder:               getOrder,
-            filterColumn:           filterColumn,
-            initFilterInput:        initFilterInput,
-            initFilterSelect:       initFilterSelect,
-            bindReload:             bindReload,
-            debounce:               debounce,
-            recalc:                 recalc,
-            setFilterValues:        setFilterValues,
-            getFilters:             getFilters
+            makeTable: makeTable,
+            addEvent: addEvent,
+            listenToEvent: listenToEvent,
+            triggerEvent: triggerEvent,
+            setPageLength: setPageLength,
+            getColumns: getColumns,
+            getOrder: getOrder,
+            filterColumn: filterColumn,
+            initFilterInput: initFilterInput,
+            initFilterSelect: initFilterSelect,
+            bindReload: bindReload,
+            debounce: debounce,
+            recalc: recalc,
+            setFilterValues: setFilterValues,
+            getFilters: getFilters
         },
         element: $table,
-        events:  events,
-        table:   getTable,
+        events: events,
+        table: getTable,
         version: version
     };
 };

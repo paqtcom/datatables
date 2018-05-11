@@ -25,7 +25,7 @@ window.DataTables = class DataTables {
             $(element),
             {
                 language: 'en',
-                dom:      '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">'
+                dom: '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">'
             },
             {},
             this.translations()
@@ -51,28 +51,28 @@ window.DataTables = class DataTables {
             get() {
                 return {
                     oAria: {
-                        sSortAscending:  ': activeer om kolom oplopend te sorteren',
+                        sSortAscending: ': activeer om kolom oplopend te sorteren',
                         sSortDescending: ': activeer om kolom aflopend te sorteren'
                     },
                     oPaginate: {
-                        sFirst:    'Eerste',
-                        sLast:     'Laatste',
-                        sNext:     'Volgende',
+                        sFirst: 'Eerste',
+                        sLast: 'Laatste',
+                        sNext: 'Volgende',
                         sPrevious: 'Vorige'
                     },
-                    sEmptyTable:     'Geen resultaten aanwezig in de tabel',
-                    sInfo:           '_START_ tot _END_ van _TOTAL_ resultaten',
-                    sInfoEmpty:      'Geen resultaten om weer te geven',
-                    sInfoFiltered:   ' (gefilterd uit _MAX_ resultaten)',
-                    sInfoPostFix:    '',
-                    sInfoThousands:  '',
-                    sLengthMenu:     '_MENU_ resultaten weergeven',
+                    sEmptyTable: 'Geen resultaten aanwezig in de tabel',
+                    sInfo: '_START_ tot _END_ van _TOTAL_ resultaten',
+                    sInfoEmpty: 'Geen resultaten om weer te geven',
+                    sInfoFiltered: ' (gefilterd uit _MAX_ resultaten)',
+                    sInfoPostFix: '',
+                    sInfoThousands: '',
+                    sLengthMenu: '_MENU_ resultaten weergeven',
                     sLoadingRecords: 'Een moment geduld aub - bezig met laden...',
-                    sProcessing:     'Bezig...',
-                    sSearch:         'Zoeken:',
-                    sZeroRecords:    'Geen resultaten gevonden',
-                    all:             'Alles',
-                    columns:         'Kolommen'
+                    sProcessing: 'Bezig...',
+                    sSearch: 'Zoeken:',
+                    sZeroRecords: 'Geen resultaten gevonden',
+                    all: 'Alles',
+                    columns: 'Kolommen'
                 };
             }
         };
