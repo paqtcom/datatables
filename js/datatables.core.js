@@ -3,7 +3,7 @@
  */
 class DataTable {
     /**
-     * Initialize all the diffrent components.
+     * Initialize all the different components.
      *
      * @param {object} $table
      * @param {object} userOptions
