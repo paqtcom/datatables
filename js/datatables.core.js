@@ -1,7 +1,5 @@
 /**
- * Making DataTables fun again.
- *
- * @return {object}
+ * Way2Web DataTables package.
  */
 class DataTable {
     /**
