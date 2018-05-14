@@ -35,39 +35,32 @@
         "one-var": ["error", "never"],
         "operator-assignment": ["error", "always"],
         "spaced-comment": ["error", "always"],
-        "require-jsdoc": [
-            "error",
-            {
-                "require": {
-                    "FunctionDeclaration": true,
-                    "MethodDefinition": true,
-                    "ClassDeclaration": true,
-                    "FunctionExpression": true
-                }
+        "require-jsdoc": ["error", {
+            "require": {
+                "FunctionDeclaration": true,
+                "MethodDefinition": true,
+                "ClassDeclaration": true
             }
-        ],
-        "valid-jsdoc": [
-            "error",
-            {
-                "prefer": {
-                    "arg": "param",
-                    "argument": "param",
-                    "class": "constructor",
-                    "return": "return",
-                    "virtual": "abstract"
-                },
-                "preferType": {
-                    "Boolean": "boolean",
-                    "Number": "number",
-                    "Object": "object",
-                    "String": "string"
-                },
-                "requireReturn": false,
-                "matchDescription": ".+",
-                "requireParamDescription": false,
-                "requireReturnDescription": false
-            }
-        ],
+        }],
+        "valid-jsdoc": ["error", {
+            "prefer": {
+                "arg": "param",
+                "argument": "param",
+                "class": "constructor",
+                "return": "return",
+                "virtual": "abstract"
+            },
+            "preferType": {
+                "Boolean": "boolean",
+                "Number": "number",
+                "Object": "object",
+                "String": "string"
+            },
+            "requireReturn": false,
+            "matchDescription": ".+",
+            "requireParamDescription": false,
+            "requireReturnDescription": false
+        }],
         "prettier/prettier": ["error"]
     }
 }

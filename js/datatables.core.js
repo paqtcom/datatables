@@ -53,7 +53,7 @@ class DataTable {
         };
 
         this.events = {
-            'draw.dt': [this.recalc],
+            'draw.dt': [this.recalc.bind(this)],
             'init.dt': [],
             initComplete: []
         };
@@ -140,13 +140,15 @@ class DataTable {
              * init complete.
              */
             initComplete: function() {
-                var filterRow = this.table.find(this.elements.filterRowSelector);
+                var filterRow = dataTableConfig.component.table.find(
+                    dataTableConfig.component.elements.filterRowSelector
+                );
 
                 if (filterRow.length > 0) {
-                    this.filterColumn();
+                    dataTableConfig.component.filterColumn();
                 }
 
-                this.triggerEvent('initComplete');
+                dataTableConfig.component.triggerEvent('initComplete');
             },
             language: this.globals.translations,
             order: tableOrder,
@@ -155,8 +157,11 @@ class DataTable {
             responsive: true,
             serverSide: this.globals.serverSide,
             stateSave: this.globals.options.stateSaving,
-            dom: this.globals.options.dom
+            dom: this.globals.options.dom,
+            component: this
         };
+
+        let component = this;
 
         if (this.globals.options.buttons) {
             dataTableConfig.buttons = this.globals.options.buttons;
@@ -189,12 +194,12 @@ class DataTable {
         }
 
         this.globals.table.on('init.dt', function() {
-            this.triggerEvent('init.dt');
+            component.triggerEvent('init.dt');
         });
 
         // once the table has been drawn, ensure a responsive reculcation
         // if we do not do this, pagination might cause columns to go outside the table
-        $.each(this.events, this.listenToEvent);
+        $.each(this.events, this.listenToEvent.bind(this));
 
         if (this.globals.serverSide != true) {
             this.filterColumn();
@@ -221,8 +226,10 @@ class DataTable {
      * @param {string} eventKey
      */
     listenToEvent(eventKey) {
+        let component = this;
+
         this.globals.table.on(eventKey, function() {
-            this.triggerEvent(eventKey, arguments);
+            component.triggerEvent(eventKey, arguments);
         });
     }
 
@@ -327,20 +334,22 @@ class DataTable {
      * Filter the columns.
      */
     filterColumn() {
-        if (!this.globals.table) {
+        let component = this;
+
+        if (!component.globals.table) {
             return;
         }
 
-        this.globals.table
+        component.globals.table
             .columns()
             .eq(0)
             .each(function(colIdx) {
-                var tableFilter = this.table.find(this.elements.filterRowSelector + ' th:eq(' + colIdx + ')');
-                var tableColumn = this.table.find(this.elements.columnRowSelector + ' th:eq(' + colIdx + ')');
+                var tableFilter = component.table.find(component.elements.filterRowSelector + ' th:eq(' + colIdx + ')');
+                var tableColumn = component.table.find(component.elements.columnRowSelector + ' th:eq(' + colIdx + ')');
 
-                this.initFilterSelect(colIdx, tableFilter);
-                this.initFilterInput(colIdx, tableFilter);
-                this.initFilterVisible(colIdx, tableColumn);
+                component.initFilterSelect(colIdx, tableFilter);
+                component.initFilterInput(colIdx, tableFilter);
+                component.initFilterVisible(colIdx, tableColumn);
             });
     }
 
@@ -351,22 +360,24 @@ class DataTable {
      * @param {object} tableFilter
      */
     initFilterInput(colIdx, tableFilter) {
-        var debouncedFiltering = this.debounce(function(columnEvent, input) {
-            var searchValue = $(this).val();
+        let component = this;
+
+        let debouncedFiltering = component.debounce(function(columnEvent, input) {
+            const searchValue = $(this).val();
 
             if (input && !searchValue) {
                 return;
             }
 
-            this.globals.table
+            component.globals.table
                 .column(colIdx)
                 .search(searchValue)
                 .draw();
-        }, this.globals.debounceDelay);
+        }, component.globals.debounceDelay);
 
-        tableFilter.find(this.elements.filterInputColumn).on('input', debouncedFiltering);
-        tableFilter.find(this.elements.filterInputColumn).on('change', debouncedFiltering);
-        tableFilter.find(this.elements.filterInputColumn).each(debouncedFiltering);
+        tableFilter.find(component.elements.filterInputColumn).on('input', debouncedFiltering);
+        tableFilter.find(component.elements.filterInputColumn).on('change', debouncedFiltering);
+        tableFilter.find(component.elements.filterInputColumn).each(debouncedFiltering);
     }
 
     /**
@@ -376,9 +387,11 @@ class DataTable {
      * @param {object} tableFilter
      */
     initFilterSelect(colIdx, tableFilter) {
-        var debouncedFiltering = this.debounce(function(columnEvent, input) {
-            var searchValue = $(this).val();
-            var regExSearch = '';
+        let component = this;
+
+        let debouncedFiltering = component.debounce(function(columnEvent, input) {
+            const searchValue = $(this).val();
+            let regExSearch = '';
 
             if (input && !searchValue) {
                 return;
@@ -388,14 +401,14 @@ class DataTable {
                 regExSearch = '^' + searchValue + '$';
             }
 
-            this.globals.table
+            component.globals.table
                 .column(colIdx)
                 .search(regExSearch, true, false)
                 .draw();
-        }, this.globals.debounceDelay);
+        }, component.globals.debounceDelay);
 
-        tableFilter.find(this.elements.filterSelectColumn).on('change', debouncedFiltering);
-        tableFilter.find(this.elements.filterSelectColumn).each(debouncedFiltering);
+        tableFilter.find(component.elements.filterSelectColumn).on('change', debouncedFiltering);
+        tableFilter.find(component.elements.filterSelectColumn).each(debouncedFiltering);
     }
 
     /**
@@ -469,11 +482,13 @@ class DataTable {
      * Set the filter values.
      */
     setFilterValues() {
-        if (!this.globals.state || !this.globals.state.columns) {
+        let component = this;
+
+        if (!component.globals.state || !component.globals.state.columns) {
             return;
         }
 
-        $.each(this.globals.state.columns, function(column, value) {
+        $.each(component.globals.state.columns, function(column, value) {
             var searchValue = value.search.search;
 
             // On a dropdown, regex is used for the search, to receive only values with the exact value.
@@ -483,8 +498,8 @@ class DataTable {
                 searchValue = searchValue.slice(1, -1);
             }
 
-            this.table
-                .find(this.elements.filterRowSelector + ' .form-control')
+            component.table
+                .find(component.elements.filterRowSelector + ' .form-control')
                 .eq(column)
                 .val(searchValue);
         });
@@ -500,13 +515,14 @@ class DataTable {
         var filters = {};
         var buttons = [];
         var allButtons = [];
+        let component = this;
 
-        if (this.globals.options.buttons) {
+        if (component.globals.options.buttons) {
             buttons = this.globals.options.buttons;
         }
 
         tableColumns.each(function() {
-            var column = $(this);
+            var column = $(component);
             var columnName = column.data('name');
             var columnFilters = column.data('filter');
 
@@ -545,16 +561,16 @@ class DataTable {
         if (!jQuery.isEmptyObject(filters) && buttons.length > 0) {
             buttons.push({
                 extend: 'colvisGroup',
-                text: this.globals.translations.all,
+                text: component.globals.translations.all,
                 show: allButtons,
                 hide: []
             });
         }
 
-        if (this.globals.columnFilter == true) {
+        if (component.globals.columnFilter == true) {
             buttons.push({
                 extend: 'colvis',
-                text: '<i class="fa fa-columns"></i> ' + this.globals.translations.columns
+                text: '<i class="fa fa-columns"></i> ' + component.globals.translations.columns
             });
         }
 

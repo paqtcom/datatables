@@ -31,7 +31,7 @@ window.DataTables = class DataTables {
             this.translations()
         );
 
-        item.functions.init();
+        item.init();
 
         this.items.push(item);
     }
