@@ -103,7 +103,7 @@ class DataTable {
      * Check if all fields are ok.
      */
     hasRequirementsOrThrow() {
-        var columnRow = this.table.find(this.elements.columnRowSelector);
+        let columnRow = this.table.find(this.elements.columnRowSelector);
 
         if (typeof this.globals.source === 'undefined' || this.globals.source === '') {
             this.globals.serverSide = false;
@@ -129,10 +129,10 @@ class DataTable {
      * Create the datatable.
      */
     makeTable() {
-        var tableColumns = this.getColumns();
-        var tableOrder = this.getOrder();
+        let tableColumns = this.getColumns();
+        let tableOrder = this.getOrder();
 
-        var dataTableConfig = {
+        let dataTableConfig = {
             autoWidth: false,
             columns: tableColumns,
 
@@ -140,7 +140,7 @@ class DataTable {
              * init complete.
              */
             initComplete: function() {
-                var filterRow = dataTableConfig.component.table.find(
+                let filterRow = dataTableConfig.component.table.find(
                     dataTableConfig.component.elements.filterRowSelector
                 );
 
@@ -262,20 +262,20 @@ class DataTable {
      * @return {array}
      */
     getColumns() {
-        var tableColumns = this.table.find(this.elements.columnRowSelector + ' th');
-        var columns = [];
+        let tableColumns = this.table.find(this.elements.columnRowSelector + ' th');
+        let columns = [];
 
         tableColumns.each(function() {
             // set default options
-            var defOrderable = true;
-            var defSearchable = true;
-            var validOptionsSortOrder = [true, false];
+            let defOrderable = true;
+            let defSearchable = true;
+            let validOptionsSortOrder = [true, false];
             // get the column values
-            var column = $(this);
-            var columnName = column.data('name');
-            var columnData = column.data('data');
-            var columnOrderable = column.data('orderable');
-            var columnSearchable = column.data('searchable');
+            let column = $(this);
+            let columnName = column.data('name');
+            let columnData = column.data('data');
+            let columnOrderable = column.data('orderable');
+            let columnSearchable = column.data('searchable');
 
             if (typeof columnData === 'undefined') {
                 columnData = columnName;
@@ -306,10 +306,10 @@ class DataTable {
      * @return {array}
      */
     getOrder() {
-        var defaultOrder = [[0, 'desc']];
-        var validSortOrders = ['asc', 'desc'];
-        var sortColumn = this.table.find('[data-default-sort="true"]');
-        var sortColumnOrder = sortColumn.data('default-sort-order');
+        let defaultOrder = [[0, 'desc']];
+        let validSortOrders = ['asc', 'desc'];
+        let sortColumn = this.table.find('[data-default-sort="true"]');
+        let sortColumnOrder = sortColumn.data('default-sort-order');
 
         if (sortColumn.length === 0) {
             // no custom sort column on this table - use the default settings
@@ -344,8 +344,8 @@ class DataTable {
             .columns()
             .eq(0)
             .each(function(colIdx) {
-                var tableFilter = component.table.find(component.elements.filterRowSelector + ' th:eq(' + colIdx + ')');
-                var tableColumn = component.table.find(component.elements.columnRowSelector + ' th:eq(' + colIdx + ')');
+                let tableFilter = component.table.find(component.elements.filterRowSelector + ' th:eq(' + colIdx + ')');
+                let tableColumn = component.table.find(component.elements.columnRowSelector + ' th:eq(' + colIdx + ')');
 
                 component.initFilterSelect(colIdx, tableFilter);
                 component.initFilterInput(colIdx, tableFilter);
@@ -418,7 +418,7 @@ class DataTable {
      * @param {object} tableColumn
      */
     initFilterVisible(colIdx, tableColumn) {
-        var visible = tableColumn.data('visible');
+        let visible = tableColumn.data('visible');
 
         if (typeof visible === 'undefined') {
             visible = true;
@@ -448,11 +448,11 @@ class DataTable {
      * @return {object}
      */
     debounce(func, wait, immediate) {
-        var timeout;
+        let timeout;
 
         return function() {
-            var context = this;
-            var args = arguments;
+            let context = this;
+            let args = arguments;
 
             clearTimeout(timeout);
             timeout = setTimeout(function() {
@@ -489,7 +489,7 @@ class DataTable {
         }
 
         $.each(component.globals.state.columns, function(column, value) {
-            var searchValue = value.search.search;
+            let searchValue = value.search.search;
 
             // On a dropdown, regex is used for the search, to receive only values with the exact value.
             // Check the function initFilterSelect, before and after the search value, a char is added.
@@ -511,10 +511,10 @@ class DataTable {
      * @return {array}
      */
     getFilters() {
-        var tableColumns = this.table.find(this.elements.columnRowSelector + ' th');
-        var filters = {};
-        var buttons = [];
-        var allButtons = [];
+        let tableColumns = this.table.find(this.elements.columnRowSelector + ' th');
+        let filters = {};
+        let buttons = [];
+        let allButtons = [];
         let component = this;
 
         if (component.globals.options.buttons) {
@@ -522,9 +522,9 @@ class DataTable {
         }
 
         tableColumns.each(function() {
-            var column = $(component);
-            var columnName = column.data('name');
-            var columnFilters = column.data('filter');
+            let column = $(component);
+            let columnName = column.data('name');
+            let columnFilters = column.data('filter');
 
             if (!columnFilters) {
                 allButtons.push(columnName + ':name');
@@ -546,7 +546,7 @@ class DataTable {
         });
 
         $.each(filters, function(filterName, fields) {
-            var hideButtons = allButtons.filter(function(field) {
+            let hideButtons = allButtons.filter(function(field) {
                 return fields.indexOf(field) < 0;
             });
 
