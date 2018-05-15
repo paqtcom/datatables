@@ -6,10 +6,10 @@ class Way2web {
      * Initialize all the diffrent components.
      */
     constructor() {
-        this.datatables = new DataTables();
+        this.tables = new DataTables();
     }
 }
 
 $(document).ready(() => {
-    window.Way2web = new Way2web();
+    window.w2w = new Way2web();
 });
