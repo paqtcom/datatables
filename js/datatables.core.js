@@ -172,6 +172,10 @@ class DataTable {
             };
         }
 
+        if (!this.table) {
+            throw 'Unknown element for the datatable!';
+        }
+
         // eslint-disable-next-line new-cap
         this.globals.table = this.table.DataTable(dataTableConfig);
 
