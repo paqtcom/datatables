@@ -4,17 +4,15 @@ path=$1
 #
 # Use the optional --continue flag to run Gulp without breaking on warnings/errors
 #
-# Run: ./buildHook.sh $PWD
-#
 continueFlag=$2
 
 if [ -z "$path" ] || [ ! -d "$path" ]; then
-    echo "usage: ./buildHook.sh pathProjectRoot"
-    echo "for example: ./buildHook.sh \$PWD"
+    echo "usage: ./lintHook.sh pathProjectRoot"
+    echo "for example: ./lintHook.sh \$PWD"
     exit
 fi
 
-echo "====== Running build hook ======="
+echo "====== Running linters ======="
 
 echo "=== $gulpfile start ==="
 cd $path/$gulpfile
@@ -30,13 +28,8 @@ if [ -f package.json ]; then
     fi
 
     if [ -f node_modules/gulp/bin/gulp.js ]; then
-        if [ $2 ]; then
-            echo "= gulp dev ="
-            npm run build-dev
-        else
-            echo "= gulp prod ="
-            npm run build
-        fi
+        echo "= gulp ="
+        npm run lint
         if [ $? != 0 ]; then
             exit 1
         fi

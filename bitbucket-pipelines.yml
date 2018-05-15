@@ -5,13 +5,15 @@ pipelines:
         - step:
             caches:
                 - yarn
+                - node
             script:
-                - ./bitbucket-pipelines/assets.sh
+                - ./bitbucket-pipelines/lint.sh
     branches:
         default:
             - step:
                 caches:
                     - yarn
+                    - node
                 script:
                     - ./bitbucket-pipelines/assets.sh
         release:

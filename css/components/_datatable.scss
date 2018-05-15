@@ -21,6 +21,10 @@ table.dataTable,
     }
 }
 
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: left;
+}
+
 @media (min-width: $screen-sm-min) {
     .dataTables_paginate,
     .dataTables_info,

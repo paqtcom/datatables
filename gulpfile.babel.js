@@ -8,7 +8,9 @@
 import gulp from 'gulp';
 import gutil from 'gulp-util';
 import Task from './gulp/bootstrap/task';
-import { packageOptions, gulpOptions } from './gulp/bootstrap/config';
+import {
+    packageOptions, gulpOptions
+} from './gulp/bootstrap/config';
 
 /*
  * Configure
@@ -16,21 +18,21 @@ import { packageOptions, gulpOptions } from './gulp/bootstrap/config';
 
 const paths = {
     root: './',
-    dist: `./dist/`
+    dist: './dist/'
 };
 
 export const folders = {
     scripts: `${paths.root}js/`,
-    styles: `${paths.root}css/`,
-    test: `${paths.root}test/`,
-    npm: 'node_modules/'
+    styles:  `${paths.root}css/`,
+    test:    `${paths.root}test/`,
+    npm:     'node_modules/'
 };
 
 export const dist = {
-    root: `${paths.dist}`,
+    root:    `${paths.dist}`,
     scripts: `${paths.dist}js/`,
-    styles: `${paths.dist}css/`,
-    fonts: `${paths.dist}fonts/`
+    styles:  `${paths.dist}css/`,
+    fonts:   `${paths.dist}fonts/`
 };
 
 /*
@@ -41,18 +43,34 @@ export const dist = {
  *       to: '../fonts/winternote/winternote'
  * });
  */
-export { packageOptions, gulpOptions };
+export {
+    packageOptions, gulpOptions
+};
 
 /*
  * Import all our tasks
  */
-import { lintStyles, lintScripts } from './gulp/lint';
-import { scripts } from './gulp/scripts';
-import { styles } from './gulp/styles';
-import { copy } from './gulp/copy';
-import { clean } from './gulp/clean';
-import { bust } from './gulp/rev';
-import { modernizr } from './gulp/modernizr';
+import {
+    lintStyles, lintScripts
+} from './gulp/lint';
+import {
+    scripts
+} from './gulp/scripts';
+import {
+    styles
+} from './gulp/styles';
+import {
+    copy
+} from './gulp/copy';
+import {
+    clean
+} from './gulp/clean';
+import {
+    bust
+} from './gulp/rev';
+import {
+    modernizr
+} from './gulp/modernizr';
 
 /*
  * Define the tasks
@@ -67,7 +85,7 @@ export const taskConfig = {
     ],
     scripts: [
         new Task(
-           [
+            [
                 'jquery/dist/jquery.js',
                 'bootstrap-sass/assets/javascripts/bootstrap.min.js',
                 'datatables.net/js/jquery.dataTables.js',
@@ -78,12 +96,12 @@ export const taskConfig = {
                 'datatables.net-buttons/js/buttons.html5.js',
                 'datatables.net-buttons/js/buttons.print.js',
                 'datatables.net-responsive/js/dataTables.responsive.js',
-                'datatables.net-responsive-bs/js/responsive.bootstrap.js',
-           ],
-           folders.npm,
-           dist.scripts + 'vendor.js'
-       ),
-       new Task(
+                'datatables.net-responsive-bs/js/responsive.bootstrap.js'
+            ],
+            folders.npm,
+            dist.scripts + 'vendor.js'
+        ),
+        new Task(
             [
                 'datatables.core.js'
             ],
@@ -101,8 +119,8 @@ export const taskConfig = {
             ['*'],
             folders.test,
             dist.root
-        ),
-    ],
+        )
+    ]
 };
 
 /*
@@ -119,9 +137,9 @@ function watch() {
  */
 const lint = gulp.parallel(lintStyles, lintScripts);
 const build = gulp.series(
- clean,
- gulp.parallel(lint, styles, scripts, copy),
- bust
+    clean,
+    gulp.parallel(lint, styles, scripts, copy),
+    bust
 );
 
 /*
