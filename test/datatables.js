@@ -1,70 +1,80 @@
-(function(Table) {
-    'use strict';
+/**
+ * Add datatables to the page with ajax.
+ */
+window.DataTables = class DataTables {
+    /**
+     * Initialize the datatables component.
+     */
+    constructor() {
+        this.items = [];
+        this.elements = {
+            tableSelector: '.js-datatable'
+        };
+
+        $(this.elements.tableSelector).each(this.find.bind(this));
+    }
 
     /**
-     * Add datatables to the page with ajax.
+     * Attach the DataTable core to the elements.
+     *
+     * @param {integer} index
+     * @param {object} element
      */
-
-    // Object with the elements for the datatable.
-    Table.elements = {
-        tableSelector: '.js-datatable'
-    };
-
-    // The datatables will be stored in this array.
-    Table.items = [];
-
-    // Find the elements to connect the datatables.
-    Table.init = function() {
-        $(Table.elements.tableSelector).each(Table.find);
-    };
-
-    // Attach the DataTable core to the elements.
-    Table.find = function() {
-        var item = new DataTable(
-            $(this),
+    find(index, element) {
+        let item = new DataTable(
+            $(element),
             {
                 language: 'en',
-                dom:      '<\'row\'<\'col-sm-6\'l><\'col-sm-6\'f>>' +
-                          '<\'row\'<\'col-sm-12\'tr>>' +
-                          '<\'row\'<\'col-sm-5\'i><\'col-sm-7\'p>>',
-                buttons: [
-                    {
-                        extend: 'csvHtml5',
-                        text:   'CSV'
-                    }, {
-                        extend: 'excelHtml5',
-                        text:   'Excel'
-                    }, {
-                        extend: 'pdfHtml5',
-                        text:   'PDF'
-                    }
-                ],
-                perPage: 25
+                dom: '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">'
             },
-            {
-                'draw.dt':      [drawOk],
-                'initComplete': [initComplete]
-            },
-            Table.Translations
+            {},
+            this.translations()
         );
 
-        item.functions.init();
-        Table.items.push(item);
-    };
+        item.init();
 
-    /**
-     * Example function called after an event.
-     */
-    function initComplete() {
-        // eslint-disable-next-line no-console
-        console.log('Init Complete');
+        this.items.push(item);
     }
 
     /**
-     * Example function called after an event.
+     * The translations object for the Datatbales package.
+     *
+     * @return {object}
      */
-    function drawOk() {
-        // eslint-disable-next-line no-console
-        console.log('Draw OK');
+    translations() {
+        return {
+            /**
+             * Get all the datatables translations with Lang.js.
+             *
+             * @return {object}
+             */
+            get() {
+                return {
+                    oAria: {
+                        sSortAscending: ': activeer om kolom oplopend te sorteren',
+                        sSortDescending: ': activeer om kolom aflopend te sorteren'
+                    },
+                    oPaginate: {
+                        sFirst: 'Eerste',
+                        sLast: 'Laatste',
+                        sNext: 'Volgende',
+                        sPrevious: 'Vorige'
+                    },
+                    sEmptyTable: 'Geen resultaten aanwezig in de tabel',
+                    sInfo: '_START_ tot _END_ van _TOTAL_ resultaten',
+                    sInfoEmpty: 'Geen resultaten om weer te geven',
+                    sInfoFiltered: ' (gefilterd uit _MAX_ resultaten)',
+                    sInfoPostFix: '',
+                    sInfoThousands: '',
+                    sLengthMenu: '_MENU_ resultaten weergeven',
+                    sLoadingRecords: 'Een moment geduld aub - bezig met laden...',
+                    sProcessing: 'Bezig...',
+                    sSearch: 'Zoeken:',
+                    sZeroRecords: 'Geen resultaten gevonden',
+                    all: 'Alles',
+                    columns: 'Kolommen'
+                };
+            }
+        };
     }
-})(window.Way2web.Table = window.Way2web.Table || {});
+};

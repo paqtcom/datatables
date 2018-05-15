@@ -2,7 +2,9 @@
  * Bootstrap gulp
  */
 import gulp from 'gulp';
-import { packageOptions, gulpOptions, taskConfig } from '../gulpfile.babel.js';
+import {
+    packageOptions, gulpOptions, taskConfig
+} from '../gulpfile.babel.js';
 import * as utilities from './bootstrap/utilities';
 import * as manifest from './bootstrap/manifest';
 
@@ -12,6 +14,8 @@ import * as manifest from './bootstrap/manifest';
 import uglify from 'gulp-uglify';
 import concat from 'gulp-concat';
 import merge from 'merge-stream';
+import babel from 'gulp-babel';
+
 
 /*
  * Task: Concat all JavaScript and minify it
@@ -22,9 +26,16 @@ function scripts() {
     let tasks = taskConfig.scripts.map(task => {
         revManifest = manifest.checkFile(revManifest, task.saveto, task.filename);
 
-        return gulp.src(task.src, gulpOptions.src)
+        let gulpTask = gulp.src(task.src, gulpOptions.src)
             .on('end', utilities.logBegin('Scripts'))
-            .pipe(utilities.initSourceMaps())
+            .pipe(utilities.initSourceMaps());
+
+        if (task.filename !== 'vendor.js') {
+            // non vendor scripts with babel
+            gulpTask = gulpTask.pipe(babel());
+        }
+
+        return gulpTask
             .pipe(concat(task.filename))
             .pipe(
                 uglify(packageOptions.uglify).on('error', function(error) {
@@ -43,4 +54,6 @@ function scripts() {
     return merge(tasks);
 }
 
-export { scripts };
+export {
+    scripts
+};
