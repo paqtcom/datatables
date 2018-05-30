@@ -411,20 +411,20 @@ class DataTable {
     /**
      * Returns a delimited string from an array or the original search value.
      *
-     * @param  {*} searchValue
+     * @param  {*} initialSearchValue
      * @param  {string} [delimiter='|']
      *
      * @return {*}
      */
-    searchString(searchValue, delimiter = '|') {
-        if (!searchValue) {
+    searchString(initialSearchValue, delimiter = '|') {
+        let searchValue = initialSearchValue;
+
+        if (!searchValue || (Array.isArray(searchValue) && searchValue.length < 1)) {
             return '';
         }
 
         if (Array.isArray(searchValue) && searchValue.length > 0) {
             searchValue = searchValue.join(delimiter);
-        } else {
-            return '';
         }
 
         return '^' + searchValue + '$';
