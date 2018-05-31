@@ -11,7 +11,7 @@ class DataTable {
      * @param {object} translations
      */
     constructor($table, userOptions, eventOptions, translations) {
-        this.version = '0.3.0';
+        this.version = '1.0.0';
 
         this.table = $table;
         this.userOptions = userOptions;
@@ -392,25 +392,42 @@ class DataTable {
         let component = this;
 
         let debouncedFiltering = component.debounce(function(columnEvent, input) {
-            const searchValue = $(this).val();
-            let regExSearch = '';
+            let searchValue = $(this).val();
 
             if (input && !searchValue) {
                 return;
             }
 
-            if (searchValue) {
-                regExSearch = '^' + searchValue + '$';
-            }
-
             component.globals.table
                 .column(colIdx)
-                .search(regExSearch, true, false)
+                .search(component.searchString(searchValue), true, false)
                 .draw();
         }, component.globals.debounceDelay);
 
         tableFilter.find(component.elements.filterSelectColumn).on('change', debouncedFiltering);
         tableFilter.find(component.elements.filterSelectColumn).each(debouncedFiltering);
+    }
+
+    /**
+     * Returns a delimited string from an array or the original search value.
+     *
+     * @param  {*} initialSearchValue
+     * @param  {string} [delimiter='|']
+     *
+     * @return {*}
+     */
+    searchString(initialSearchValue, delimiter = '|') {
+        let searchValue = initialSearchValue;
+
+        if (!searchValue || (Array.isArray(searchValue) && searchValue.length < 1)) {
+            return '';
+        }
+
+        if (Array.isArray(searchValue) && searchValue.length > 0) {
+            searchValue = searchValue.join(delimiter);
+        }
+
+        return '^' + searchValue + '$';
     }
 
     /**
