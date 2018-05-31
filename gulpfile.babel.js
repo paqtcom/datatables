@@ -106,7 +106,7 @@ export const taskConfig = {
                 'datatables.core.js'
             ],
             folders.scripts,
-            dist.scripts + 'app.js'
+            dist.scripts + 'datatables.core.js'
         )
     ],
     copy: [
