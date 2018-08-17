@@ -148,7 +148,6 @@ class DataTable {
 
                 dataTableConfig.component.triggerEvent('initComplete');
             },
-            language: this.globals.translations,
             order: tableOrder,
             orderCellsTop: true,
             processing: true,
@@ -161,6 +160,7 @@ class DataTable {
         let component = this;
 
         $.extend(dataTableConfig, this.globals.options);
+        dataTableConfig.language = this.globals.translations;
 
         if (this.globals.serverSide == true) {
             dataTableConfig.ajax = {
