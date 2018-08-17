@@ -12,6 +12,13 @@ if [ -z "$path" ] || [ ! -d "$path" ]; then
     exit
 fi
 
+echo "====== Set the proper node version ======="
+if [ -f ~/.nvm/nvm.sh ]; then
+    . ~/.nvm/nvm.sh
+fi
+
+nvm use 6
+
 echo "====== Running linters ======="
 
 echo "=== $gulpfile start ==="
@@ -41,5 +48,8 @@ else
 fi
 
 echo "=== $gulpfile end ==="
+
+echo "====== Set node back to the default version ======"
+nvm use default
 
 echo "================================="

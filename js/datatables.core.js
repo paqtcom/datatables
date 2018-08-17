@@ -11,7 +11,7 @@ class DataTable {
      * @param {object} translations
      */
     constructor($table, userOptions, eventOptions, translations) {
-        this.version = '1.0.1';
+        this.version = '1.0.2';
 
         this.table = $table;
         this.userOptions = userOptions;
@@ -148,22 +148,19 @@ class DataTable {
 
                 dataTableConfig.component.triggerEvent('initComplete');
             },
-            language: this.globals.translations,
             order: tableOrder,
             orderCellsTop: true,
             processing: true,
             responsive: true,
             serverSide: this.globals.serverSide,
             stateSave: this.globals.options.stateSaving,
-            dom: this.globals.options.dom,
             component: this
         };
 
         let component = this;
 
-        if (this.globals.options.buttons) {
-            dataTableConfig.buttons = this.globals.options.buttons;
-        }
+        $.extend(dataTableConfig, this.globals.options);
+        dataTableConfig.language = this.globals.translations;
 
         if (this.globals.serverSide == true) {
             dataTableConfig.ajax = {
