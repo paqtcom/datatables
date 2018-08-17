@@ -26,7 +26,7 @@ window.DataTables = class DataTables {
             {
                 language: 'en',
                 dom: '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right"B>>trlip<"clear">',
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']]
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'Alles']]
             },
             {},
             this.translations()
