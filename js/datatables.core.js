@@ -155,15 +155,12 @@ class DataTable {
             responsive: true,
             serverSide: this.globals.serverSide,
             stateSave: this.globals.options.stateSaving,
-            dom: this.globals.options.dom,
             component: this
         };
 
         let component = this;
 
-        if (this.globals.options.buttons) {
-            dataTableConfig.buttons = this.globals.options.buttons;
-        }
+        $.extend(dataTableConfig, this.globals.options);
 
         if (this.globals.serverSide == true) {
             dataTableConfig.ajax = {
