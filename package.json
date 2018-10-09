@@ -1,14 +1,25 @@
 {
     "name": "way2web-datatables",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Making DataTables fun again.",
-    "files": ["js/datatables.core.js", "dist/js/datatables.core.js"],
+    "files": [
+        "js/datatables.core.js",
+        "dist/js/datatables.core.js"
+    ],
     "main": "js/datatables.core.js",
     "repository": {
         "type": "mercurial",
         "url": "https://bitbucket.org/way2dev/datatables"
     },
-    "keywords": ["datatables", "javascript", "filter", "sort", "DataTables", "jQuery", "table"],
+    "keywords": [
+        "datatables",
+        "javascript",
+        "filter",
+        "sort",
+        "DataTables",
+        "jQuery",
+        "table"
+    ],
     "author": {
         "name": "Way2Web",
         "url": "https://www.way2web.nl/"
