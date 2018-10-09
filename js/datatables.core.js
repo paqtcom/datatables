@@ -514,6 +514,7 @@ class DataTable {
                 searchValue = searchValue.slice(1, -1);
             }
 
+            // TODO: get the th in tfoot with the tr with class js-table-filters
             component.table
                 .find(component.elements.filterRowSelector + ' .form-control')
                 .eq(column)

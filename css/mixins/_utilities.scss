@@ -8,9 +8,9 @@
 
     @if index($possible, $placement) {
         &:#{$placement} {
+            clear: both;
             content: '';
             display: table;
-            clear: both;
         }
     } @else {
         @warn 'D’oh! ‘#{$placement}’ is not a valid value for the clearfix. Only after or before are valid.';

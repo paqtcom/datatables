@@ -12,9 +12,9 @@ table.dataTable,
 .dataTables_paginate,
 .dataTables_info,
 .dataTables_length {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
     margin-bottom: setting(spacing, element) !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
 
     label {
         margin-bottom: 0 !important;
@@ -40,9 +40,9 @@ div.dataTables_wrapper div.dataTables_filter {
         margin-right: setting(spacing, element-narrow);
 
         &::after {
-            padding-left: setting(spacing, element-narrow);
             color: $table-border-color;
             content: '|';
+            padding-left: setting(spacing, element-narrow);
         }
     }
 }
