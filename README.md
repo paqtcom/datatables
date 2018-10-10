@@ -74,7 +74,7 @@ $('.js-datatable').each(function() {
         translations
     );
 
-    item.functions.init();
+    item.init();
 });
 ```
 
