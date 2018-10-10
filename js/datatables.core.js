@@ -507,6 +507,10 @@ class DataTable {
         $.each(component.globals.state.columns, function(column, value) {
             let searchValue = value.search.search;
 
+            if (!searchValue) {
+                return;
+            }
+
             // On a dropdown, regex is used for the search, to receive only values with the exact value.
             // Check the function initFilterSelect, before and after the search value, a char is added.
             // We have to remove the first and last char from the saved search value to select the dropdown value.
@@ -514,10 +518,10 @@ class DataTable {
                 searchValue = searchValue.slice(1, -1);
             }
 
-            // TODO: get the th in tfoot with the tr with class js-table-filters
             component.table
-                .find(component.elements.filterRowSelector + ' .form-control')
+                .find(component.elements.filterRowSelector + ' th')
                 .eq(column)
+                .find('.form-control')
                 .val(searchValue);
         });
     }
