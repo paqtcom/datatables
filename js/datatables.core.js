@@ -11,7 +11,7 @@ class DataTable {
      * @param {object} translations
      */
     constructor($table, userOptions, eventOptions, translations) {
-        this.version = '1.0.2';
+        this.version = '1.0.3';
 
         this.table = $table;
         this.userOptions = userOptions;
@@ -507,6 +507,10 @@ class DataTable {
         $.each(component.globals.state.columns, function(column, value) {
             let searchValue = value.search.search;
 
+            if (!searchValue) {
+                return;
+            }
+
             // On a dropdown, regex is used for the search, to receive only values with the exact value.
             // Check the function initFilterSelect, before and after the search value, a char is added.
             // We have to remove the first and last char from the saved search value to select the dropdown value.
@@ -515,8 +519,9 @@ class DataTable {
             }
 
             component.table
-                .find(component.elements.filterRowSelector + ' .form-control')
+                .find(component.elements.filterRowSelector + ' th')
                 .eq(column)
+                .find('.form-control')
                 .val(searchValue);
         });
     }
