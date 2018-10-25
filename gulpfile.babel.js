@@ -87,16 +87,20 @@ export const taskConfig = {
         new Task(
             [
                 'jquery/dist/jquery.js',
-                'bootstrap-sass/assets/javascripts/bootstrap.min.js',
+                'popper.js/dist/umd/popper.js',
+                'bootstrap/dist/js/bootstrap.js',
+
                 'datatables.net/js/jquery.dataTables.js',
-                'datatables.net-bs/js/dataTables.bootstrap.js',
+                'datatables.net-bs4/js/dataTables.bootstrap4.js',
+
                 'datatables.net-buttons/js/dataTables.buttons.js',
-                'datatables.net-buttons-bs/js/buttons.bootstrap.js',
+                'datatables.net-buttons-bs4/js/buttons.bootstrap4.js',
                 'datatables.net-buttons/js/buttons.colVis.js',
                 'datatables.net-buttons/js/buttons.html5.js',
                 'datatables.net-buttons/js/buttons.print.js',
+
                 'datatables.net-responsive/js/dataTables.responsive.js',
-                'datatables.net-responsive-bs/js/responsive.bootstrap.js'
+                'datatables.net-responsive-bs4/js/responsive.bootstrap4.js',
             ],
             folders.npm,
             dist.scripts + 'vendor.js'

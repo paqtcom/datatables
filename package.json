@@ -69,7 +69,8 @@
         "stylelint-scss": "1.3.4"
     },
     "dependencies": {
-        "bootstrap-sass": "^3.3.7",
+        "popper.js": "^1.14.4",
+        "bootstrap": "^4.1.3",
         "datatables.net": "^1.10.19",
         "datatables.net-bs4": "^1.10.19",
         "datatables.net-buttons": "^1.5.4",
