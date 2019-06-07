@@ -6,6 +6,6 @@
 #            this token can be found in your .npmrc, after logging in.
 printf "//`node -p \"require('url').parse(process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org').host\"`/:_authToken=${NPM_TOKEN}\nregistry=${NPM_REGISTRY_URL:-https://registry.npmjs.org}\n" >> ~/.npmrc
 # Installs public and private moduless.
-npm install
+npm ci
 # Publish the package.
 npm publish

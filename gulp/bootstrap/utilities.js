@@ -23,10 +23,7 @@ function writeSourceMaps() {
  */
 function onError(stream = false, error = false, errormessage = false, file = false) {
     if (file || errormessage) {
-        console.log(
-            gutil.colors.black(gutil.colors.bgRed(file)),
-            errormessage
-        );
+        console.log(gutil.colors.black(gutil.colors.bgRed(file)), errormessage);
     }
 
     if (!errormessage && error) {
@@ -36,8 +33,8 @@ function onError(stream = false, error = false, errormessage = false, file = fal
     console.log('');
 
     notifier.notify({
-        'title': 'w2w build',
-        'message': 'Build error!'
+        title: 'w2w build',
+        message: 'Build error!'
     });
 
     if (stream && doContinue()) {
@@ -80,7 +77,10 @@ function logEnd(task = false) {
             task.glob.map(file => fileExists(file, task.base));
 
             console.log('');
-            console.log(gutil.colors.dim('Saving to: ') + gutil.colors.black(gutil.colors.bgGreen(task.saveto + '/' + task.filename)));
+            console.log(
+                gutil.colors.dim('Saving to: ') +
+                    gutil.colors.black(gutil.colors.bgGreen(task.saveto + '/' + task.filename))
+            );
         }
 
         console.log('');
@@ -103,16 +103,13 @@ function fileExists(file, base) {
     /*
      * Checks if the file is a glob pattern of a file
      */
-    if(file.match(/\*/) || fs.existsSync(base + file)) {
+    if (file.match(/\*/) || fs.existsSync(base + file)) {
         console.log('- ' + file);
 
         return base + file;
     }
 
-    console.log(
-        '- ' + file,
-        gutil.colors.black(gutil.colors.bgRed('File not found'))
-    );
+    console.log('- ' + file, gutil.colors.black(gutil.colors.bgRed('File not found')));
 
     return;
 }
