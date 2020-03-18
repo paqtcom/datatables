@@ -60,7 +60,7 @@
         "gulp-uglify": "^3.0.2",
         "gulp-util": "^3.0.8",
         "merge-stream": "^2.0.0",
-        "node-notifier": "^5.4.0",
+        "node-notifier": "^6.0.0",
         "parse-filepath": "^1.0.2",
         "postcss-reporter": "^6.0.1",
         "postcss-scss": "^2.0.0",
