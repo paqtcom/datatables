@@ -65,7 +65,7 @@
         "postcss-reporter": "^6.0.1",
         "postcss-scss": "^2.0.0",
         "postcss-urlrewrite": "^0.2.2",
-        "prettier": "^1.18.1",
+        "prettier": "^1.19.1",
         "stylelint": "^13.2.1",
         "stylelint-config-sass-guidelines": "^6.0.0",
         "stylelint-scss": "^3.8.0"
