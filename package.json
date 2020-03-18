@@ -1,6 +1,6 @@
 {
     "name": "way2web-datatables",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "description": "Making DataTables fun again.",
     "files": [
         "js/datatables.core.js",
@@ -33,7 +33,7 @@
         "publish-to-npm": "./bitbucket-pipelines/npm.sh"
     },
     "devDependencies": {
-        "autoprefixer": "^9.6.0",
+        "autoprefixer": "^9.7.4",
         "babel-core": "^6.26.3",
         "babel-plugin-transform-object-rest-spread": "^6.26.0",
         "babel-preset-env": "^1.6.1",
@@ -70,7 +70,6 @@
         "stylelint-scss": "^3.8.0"
     },
     "dependencies": {
-        "popper.js": "^1.15.0",
         "bootstrap": "^4.3.1",
         "datatables.net": "^1.10.19",
         "datatables.net-bs4": "^1.10.19",
@@ -79,6 +78,7 @@
         "datatables.net-responsive": "^2.2.3",
         "datatables.net-responsive-bs4": "^2.2.3",
         "datatables.net-responsive-dt": "^2.2.3",
-        "jquery": "^3.4.1"
+        "jquery": "^3.4.1",
+        "popper.js": "^1.15.0"
     }
 }
