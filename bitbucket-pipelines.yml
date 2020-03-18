@@ -9,14 +9,14 @@ pipelines:
             script:
                 - ./bitbucket-pipelines/lint.sh
     branches:
-        default:
+        develop:
             - step:
                 caches:
                     - yarn
                     - node
                 script:
                     - ./bitbucket-pipelines/assets.sh
-        release:
+        master:
             - step:
                 caches:
                     - yarn

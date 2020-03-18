@@ -13,7 +13,6 @@
     "declaration-no-important": true,
     "color-named": ["never", { ignore: ["inside-function"] } ],
     "selector-max-specificity": "0,3,0",
-    "declaration-block-properties-order":  "",
     "selector-class-pattern": ""
   }
 }
