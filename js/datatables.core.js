@@ -348,7 +348,6 @@ class DataTable {
 
                 component.initFilterSelect(colIdx, tableFilter);
                 component.initFilterInput(colIdx, tableFilter);
-                component.initFilterVisible(colIdx, tableColumn);
             });
     }
 
@@ -425,22 +424,6 @@ class DataTable {
         }
 
         return '^' + searchValue + '$';
-    }
-
-    /**
-     * Initialize if the column is visible.
-     *
-     * @param {string} colIdx
-     * @param {object} tableColumn
-     */
-    initFilterVisible(colIdx, tableColumn) {
-        let visible = tableColumn.data('visible');
-
-        if (typeof visible === 'undefined') {
-            visible = true;
-        }
-
-        this.globals.table.column(colIdx).visible(visible);
     }
 
     /**
