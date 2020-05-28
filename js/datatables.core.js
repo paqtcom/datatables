@@ -70,7 +70,7 @@ class DataTable {
      *
      * @param {*} e jQuery event object
      * @param {*} settings DataTables settings object
-     * @param {*} json ata returned from the server. This will be null if triggered by the Ajax error callback.
+     * @param {*} json Data returned from the server. This will be null if triggered by the Ajax error callback.
      * @param {*} xhr jQuery XHR object that can be used to access the low level Ajax options.
      */
     onXhr(e, settings, json, xhr) {
