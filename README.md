@@ -129,6 +129,28 @@ Where 20 can be any number of items.
 
 To set your own default, add it to the user options as `perPage`.
 
+## Errors
+
+When errors occur an alert will be shown with 'Something went wrong. The administrator has been notified. Please try again later.'.
+
+The exception will be thrown (and can be picked up by Sentry for example).
+
+To disable this alert, add `showAlertForErrors: false` to the user options.
+
+To handle it yourself, add `handleErrors: function` to the user options, where function is your own function.
+In this function you could define your own modal/toast/alert etc.
+
+## Inactivity
+
+When using server data you could get errors when the uses filters/pagination after been inactive for some time (because of CSRF protection). If the Ajax call receives a 403 status code with a `{error: 'CSRF token validation failed'}` in the body, an alert will be shown with 'You need to refresh the page due to an extended period of inactivity'.
+
+All other status codes (except 2xx) will be thrown as an exception.
+
+To disable this alert, add `showAlertForInactivity: false` to the user options.
+
+To handle it yourself, add `handleInactivity: function` to the user options, where function is your own function.
+In this function you could define your own modal/toast/alert etc.
+
 ## DataTable parameters
 
 There are 4 parameters:
@@ -139,7 +161,7 @@ There are 4 parameters:
 
 -   userOptions
 
-    -   This is an array, containt e.g. the language for the datatable.
+    -   This is an array, contains e.g. the language for the datatable.
 
 -   eventOptions
 
