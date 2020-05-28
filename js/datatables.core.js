@@ -33,7 +33,11 @@ class DataTable {
             language: 'en',
             stateSaving: true,
             dom: '<"row"<"col-md-4"f><"col-md-4 col-md-offset-4 text-right">>trlip<"clear">',
-            buttons: []
+            buttons: [],
+            showAlertForXhrInactivity: true,
+            handleXhrInactivity: () => {},
+            showAlertForErrors: true,
+            handleErrors: () => {}
         };
 
         this.globals = {
@@ -53,8 +57,64 @@ class DataTable {
         this.events = {
             'draw.dt': [this.recalc.bind(this)],
             'init.dt': [],
-            initComplete: []
+            initComplete: [],
+            'xhr.dt': [this.onXhr.bind(this)],
+            'error.dt': [this.onError.bind(this)]
         };
+
+        $.fn.dataTable.ext.errMode = 'none';
+    }
+
+    /**
+     * Handle XHR results
+     *
+     * @param {*} e jQuery event object
+     * @param {*} settings DataTables settings object
+     * @param {*} json Data returned from the server. This will be null if triggered by the Ajax error callback.
+     * @param {*} xhr jQuery XHR object that can be used to access the low level Ajax options.
+     */
+    onXhr(e, settings, json, xhr) {
+        if (xhr.status === 200) {
+            return;
+        }
+
+        if (xhr.status === 403 && xhr.responseJSON.error === 'CSRF token validation failed') {
+            if (settings.oInit.showAlertForXhrInactivity) {
+                alert('You need to refresh the page due to an extended period of inactivity');
+            }
+
+            settings.oInit.handleXhrInactivity();
+        } else {
+            if (settings.oInit.showAlertForErrors) {
+                alert('Something went wrong. The administrator has been notified. Please try again later.');
+            }
+
+            settings.oInit.handleErrors();
+
+            throw this.prefix.throw + 'Ajax call returned a ' + xhr.status + ' status code';
+        }
+    }
+
+    /**
+     * Handle DataTable errors
+     *
+     * Except 'Ajax errors' (http://datatables.net/tn/7), because we handle them ourselves in onXhr
+     *
+     * @param {*} e jQuery event object
+     * @param {*} settings DataTables settings object
+     * @param {*} techNote Tech note error number - use http://datatables.net/tn/{techNote} to look up a description
+     * @param {*} message Description of error
+     */
+    onError(e, settings, techNote, message) {
+        if (techNote !== 7) {
+            if (settings.oInit.showAlertForErrors) {
+                alert('Something went wrong. The administrator has been notified. Please try again later.');
+            }
+
+            settings.oInit.handleErrors();
+
+            throw this.prefix.throw + message;
+        }
     }
 
     /**

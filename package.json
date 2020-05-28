@@ -1,6 +1,6 @@
 {
     "name": "way2web-datatables",
-    "version": "2.1.3",
+    "version": "2.2.0",
     "description": "Making DataTables fun again.",
     "files": [
         "js/datatables.core.js",
@@ -8,7 +8,7 @@
     ],
     "main": "js/datatables.core.js",
     "repository": {
-        "type": "mercurial",
+        "type": "git",
         "url": "https://bitbucket.org/way2dev/datatables"
     },
     "keywords": [
