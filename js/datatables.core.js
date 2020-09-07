@@ -11,7 +11,7 @@ class DataTable {
      * @param {object} translations
      */
     constructor($table, userOptions, eventOptions, translations) {
-        this.version = '2.1.1';
+        this.version = '2.3.0';
 
         this.table = $table;
         this.userOptions = userOptions;
@@ -649,4 +649,8 @@ class DataTable {
     getTable() {
         return this.globals.table;
     }
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = DataTable;
 }
