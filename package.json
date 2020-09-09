@@ -33,7 +33,7 @@
     "scripts": {
         "build": "microbundle",
         "dev": "microbundle watch",
-        "lint": "eslint js/*.js --config .eslintrc",
+        "lint": "eslint src/*.js --config .eslintrc",
         "publish-to-npm": "./bitbucket-pipelines/npm.sh"
     },
     "devDependencies": {
