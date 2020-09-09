@@ -1,3 +1,17 @@
+import $ from 'jquery';
+
+import 'datatables.net/js/jquery.dataTables';
+import 'datatables.net-bs4/js/dataTables.bootstrap4';
+
+import 'datatables.net-buttons/js/dataTables.buttons';
+import 'datatables.net-buttons-bs4/js/buttons.bootstrap4';
+import 'datatables.net-buttons/js/buttons.colVis';
+import 'datatables.net-buttons/js/buttons.html5';
+import 'datatables.net-buttons/js/buttons.print';
+
+import 'datatables.net-responsive/js/dataTables.responsive';
+import 'datatables.net-responsive-bs4/js/responsive.bootstrap4';
+
 /**
  * Way2Web DataTables package.
  */
@@ -11,7 +25,7 @@ class DataTable {
      * @param {object} translations
      */
     constructor($table, userOptions, eventOptions, translations) {
-        this.version = '2.3.0';
+        this.version = '3.0.0';
 
         this.table = $table;
         this.userOptions = userOptions;
