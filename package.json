@@ -13,7 +13,7 @@
     "unpkg": "dist/datatables.umd.js",
     "repository": {
         "type": "git",
-        "url": "https://bitbucket.org/way2dev/datatables"
+        "url": "https://github.com/Way2Web/datatables.git"
     },
     "keywords": [
         "datatables",
@@ -29,7 +29,7 @@
         "url": "https://www.way2web.nl/"
     },
     "license": "MIT",
-    "homepage": "https://bitbucket.org/way2dev/datatables#readme",
+    "homepage": "https://github.com/Way2Web/datatables#readme",
     "scripts": {
         "build": "microbundle",
         "dev": "microbundle watch",
