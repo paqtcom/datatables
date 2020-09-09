@@ -19,7 +19,7 @@ if [ -f ~/.nvm/nvm.sh ]; then
     . ~/.nvm/nvm.sh
 fi
 
-nvm use 10
+nvm use 14
 
 echo "====== Running build hook ======="
 
