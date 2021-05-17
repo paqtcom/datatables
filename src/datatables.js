@@ -88,6 +88,12 @@ class DataTable {
      * @param {*} xhr jQuery XHR object that can be used to access the low level Ajax options.
      */
     onXhr(e, settings, json, xhr) {
+        // Only validate the response when the request has been completed.
+        // @see https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState
+        if (xhr.readyState !== 4) {
+            return;
+        }
+
         if (xhr.status === 200) {
             return;
         }
