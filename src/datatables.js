@@ -424,7 +424,6 @@ class DataTable {
             .eq(0)
             .each(function(colIdx) {
                 let tableFilter = component.table.find(component.elements.filterRowSelector + ' th:eq(' + colIdx + ')');
-                let tableColumn = component.table.find(component.elements.columnRowSelector + ' th:eq(' + colIdx + ')');
 
                 component.initFilterSelect(colIdx, tableFilter);
                 component.initFilterInput(colIdx, tableFilter);
