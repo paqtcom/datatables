@@ -25,7 +25,7 @@ class DataTable {
      * @param {object} translations
      */
     constructor($table, userOptions, eventOptions, translations) {
-        this.version = '3.0.0';
+        this.version = '3.0.1';
 
         this.table = $table;
         this.userOptions = userOptions;
