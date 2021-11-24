@@ -4,6 +4,9 @@ Making DataTables fun again.
 
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-stats]
 
+> **⚠ WARNING: No maintenance intended**  
+> This package is not actively maintained.
+
 ## How to use this script:
 
 Create a new table in your view. It must follow the following markup:
